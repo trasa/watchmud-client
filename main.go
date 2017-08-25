@@ -3,12 +3,12 @@ package main
 import (
 	"github.com/gorilla/websocket"
 
+	"encoding/json"
+	"github.com/trasa/watchmud/message"
 	"log"
 	"os"
 	"os/signal"
 	"time"
-	"encoding/json"
-	"github.com/trasa/watchmud/message"
 )
 
 const SERVER_ADDR = "ws://localhost:8888/ws"
@@ -41,7 +41,7 @@ func main() {
 			log.Printf("recv: %s", msg)
 			loginResp := &message.LoginResponse{}
 			if err := json.Unmarshal(msg, loginResp); err != nil {
-				log.Printf("Unmarshall error: ", err)
+				log.Println("Unmarshall error: ", err)
 			}
 			log.Printf("loginResp %s %s", loginResp.Successful, loginResp.Player.Name)
 		}
@@ -50,14 +50,19 @@ func main() {
 	// send login request
 	playerName := "somedood"
 	password := "NotImplemented"
-	loginReq := make(map[string]string)
-	loginReq["msg_type"] = "login"
-	loginReq["player_name"] = playerName
-	loginReq["password"] = password
 
-	j, _ := json.Marshal(loginReq)
+	loginReq := message.LoginRequest{
+		Request:    message.RequestBase{MessageType: "login"},
+		PlayerName: playerName,
+		Password:   password,
+	}
+	requestEnv := message.RequestEnvelope{
+		Format: "request",
+		Value:  loginReq,
+	}
+	j, _ := json.Marshal(requestEnv)
 	log.Printf("sending \n%s\n", j)
 
-	conn.WriteJSON(loginReq)
+	conn.WriteJSON(requestEnv)
 	time.Sleep(time.Second * 10)
 }
