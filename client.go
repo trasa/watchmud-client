@@ -1,10 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/gorilla/websocket"
 	"github.com/trasa/watchmud/message"
 	"log"
+	"reflect"
 )
 
 type Client struct {
@@ -70,13 +70,26 @@ func (c *Client) readPump() {
 			log.Println("read error:", err)
 			return
 		}
-		// TODO write stuff here..
-		log.Printf("received: %s", msg)
-		// TODO turn received message into something ...
-		loginResp := &message.LoginResponse{}
-		if err := json.Unmarshal(msg, loginResp); err != nil {
-			log.Println("Unmarshall error: ", err)
+		log.Printf("raw received: %s", msg)
+		r, err := message.TranslateToResponse(msg)
+		if err != nil {
+			log.Println("unmarshal / translate error", err)
+			// then?
 		}
-		log.Printf("loginResp %s %s", loginResp.Successful, loginResp.Player.Name)
+		log.Println("response ", r)
+
+		c.handleIncomingResponse(r)
+	}
+}
+
+func (c *Client) handleIncomingResponse(resp message.Response) {
+	// TODO write all of this...
+	log.Println("type is ", reflect.TypeOf(resp))
+	switch resp.(type) {
+	case *message.LoginResponse:
+		log.Println("loginResponse", resp.(*message.LoginResponse).Player.Name)
+
+	default:
+		log.Println("unknown response type", resp)
 	}
 }
