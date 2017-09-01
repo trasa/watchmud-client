@@ -4,13 +4,13 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/trasa/watchmud/message"
 	"log"
-	"reflect"
 )
 
 type Client struct {
-	conn   *websocket.Conn
-	quit   chan interface{}
-	source chan interface{} // sends up to server
+	conn       *websocket.Conn
+	quit       chan interface{}
+	source     chan interface{}   // sends up to server
+	playerData message.PlayerData // who am I anyway
 }
 
 func Connect(serverAddress string) (*Client, error) {
@@ -19,9 +19,12 @@ func Connect(serverAddress string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	// this starts up the writePump and the readPump
 	return NewClient(conn), nil
 }
 
+// Create a new Client instance for this connection, and
+// establish the writePump and readPump for that Client.
 func NewClient(conn *websocket.Conn) *Client {
 	c := Client{
 		conn:   conn,
@@ -71,23 +74,18 @@ func (c *Client) readPump() {
 			return
 		}
 		log.Printf("raw received: %s", msg)
-		r, err := message.TranslateToResponse(msg)
-		if err != nil {
+		if r, err := message.TranslateToResponse(msg); err != nil {
 			log.Println("unmarshal / translate error", err)
-			// then?
+		} else {
+			c.handleIncomingResponse(r)
 		}
-		log.Println("response ", r)
-
-		c.handleIncomingResponse(r)
 	}
 }
 
 func (c *Client) handleIncomingResponse(resp message.Response) {
-	// TODO write all of this...
-	log.Println("type is ", reflect.TypeOf(resp))
 	switch resp.(type) {
 	case *message.LoginResponse:
-		log.Println("loginResponse", resp.(*message.LoginResponse).Player.Name)
+		c.handleLoginResponse(resp.(*message.LoginResponse))
 
 	default:
 		log.Println("unknown response type", resp)
