@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"time"
 )
 
 const SERVER_ADDR = "ws://localhost:8888/ws"
@@ -33,6 +32,7 @@ func main() {
 		Password:   password,
 	}
 	client.SendRequest(loginReq)
-	// TODO do something more interesting than sleep and exit...
-	time.Sleep(time.Second * 10)
+
+	client.readStdin()
+
 }

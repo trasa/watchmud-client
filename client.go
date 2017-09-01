@@ -1,9 +1,13 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/trasa/watchmud/message"
 	"log"
+	"os"
+	"time"
 )
 
 type Client struct {
@@ -34,6 +38,14 @@ func NewClient(conn *websocket.Conn) *Client {
 	go c.writePump()
 	go c.readPump()
 	return &c
+}
+
+func (c *Client) SendLine(line string) {
+	requestEnvelope := message.RequestEnvelope{
+		Format: "line",
+		Value:  line,
+	}
+	c.source <- requestEnvelope
 }
 
 func (c *Client) SendRequest(request interface{}) {
@@ -80,6 +92,28 @@ func (c *Client) readPump() {
 			c.handleIncomingResponse(r)
 		}
 	}
+}
+
+// Read stdin for line input and send to the server
+// until we receive a command like /q, in which case
+// this terminates.
+func (c *Client) readStdin() {
+	scanner := bufio.NewScanner(os.Stdin)
+	c.printPrompt()
+	for scanner.Scan() {
+		line := scanner.Text()
+		if line == "/q" {
+			c.quit <- "exit now!"
+			time.Sleep(1 * time.Second)
+			break
+		}
+		c.SendLine(line)
+		c.printPrompt()
+	}
+}
+
+func (c *Client) printPrompt() {
+	fmt.Print("> ")
 }
 
 func (c *Client) handleIncomingResponse(resp message.Response) {
