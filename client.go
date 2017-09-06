@@ -141,6 +141,9 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 	case *message.LoginResponse:
 		c.handleLoginResponse(resp.(*message.LoginResponse))
 
+	case *message.LookResponse:
+		c.handleLookResponse(resp.(*message.LookResponse))
+
 	default:
 		log.Println("unknown response type", resp)
 	}
