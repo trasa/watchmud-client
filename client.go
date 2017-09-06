@@ -7,13 +7,14 @@ import (
 	"github.com/trasa/watchmud/message"
 	"log"
 	"os"
-	"time"
 )
 
 type Client struct {
 	conn       *websocket.Conn
 	quit       chan interface{}
-	source     chan interface{}   // sends up to server
+	quitSignal chan os.Signal
+	source     chan interface{} // sends up to server
+	isClosed   bool
 	playerData message.PlayerData // who am I anyway
 }
 
@@ -31,9 +32,10 @@ func Connect(serverAddress string) (*Client, error) {
 // establish the writePump and readPump for that Client.
 func NewClient(conn *websocket.Conn) *Client {
 	c := Client{
-		conn:   conn,
-		quit:   make(chan interface{}),
-		source: make(chan interface{}, 256),
+		conn:       conn,
+		quit:       make(chan interface{}),
+		quitSignal: make(chan os.Signal),
+		source:     make(chan interface{}),
 	}
 	go c.writePump()
 	go c.readPump()
@@ -41,6 +43,10 @@ func NewClient(conn *websocket.Conn) *Client {
 }
 
 func (c *Client) SendLine(line string) {
+	if c.isClosed {
+		log.Println("not sending, c.isClosed", line)
+		return
+	}
 	requestEnvelope := message.RequestEnvelope{
 		Format: "line",
 		Value:  line,
@@ -70,8 +76,13 @@ func (c *Client) writePump() {
 				return
 			}
 
-		case <-c.quit:
-			log.Println("QUIT channel message received")
+		case quitmessage := <-c.quit:
+			log.Println("writePump: QUIT channel message received:", quitmessage)
+			c.isClosed = true
+			return
+		case quitsig := <-c.quitSignal:
+			log.Println("writePump: QuitSignal received:", quitsig.String())
+			c.isClosed = true
 			return
 		}
 	}
@@ -83,6 +94,8 @@ func (c *Client) readPump() {
 		_, msg, err := c.conn.ReadMessage()
 		if err != nil {
 			log.Println("read error:", err)
+			c.quit <- fmt.Sprint("read error ", err)
+			c.isClosed = true
 			return
 		}
 		log.Printf("raw received: %s", msg)
@@ -99,20 +112,27 @@ func (c *Client) readPump() {
 // this terminates.
 func (c *Client) readStdin() {
 	scanner := bufio.NewScanner(os.Stdin)
-	c.printPrompt()
+	// seriously annoying: this blocks forever, even if SIGINT
+	// has been sent. There doesn't seem to be a way to set up a
+	// signal handler here to break us out of this for loop if
+	// received
 	for scanner.Scan() {
+		if c.isClosed {
+			log.Println("c.isClosed")
+			return
+		}
 		line := scanner.Text()
+		log.Println(line)
 		if line == "/q" {
-			c.quit <- "exit now!"
-			time.Sleep(1 * time.Second)
-			break
+			c.quit <- "QUIT command"
+			return
 		}
 		c.SendLine(line)
-		c.printPrompt()
 	}
 }
 
 func (c *Client) printPrompt() {
+	// TODO need to figure out when the right time to print the prompt is ...
 	fmt.Print("> ")
 }
 

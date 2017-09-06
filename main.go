@@ -13,14 +13,12 @@ func main() {
 	// TODO read from yaml configuration or something
 	// TODO override with command line args
 
-	interrupt := make(chan os.Signal, 1)
-	signal.Notify(interrupt, os.Interrupt)
-
 	// connect client
 	client, err := Connect(SERVER_ADDR)
 	if err != nil {
 		log.Fatal("Failed to connect", err)
 	}
+	signal.Notify(client.quitSignal, os.Interrupt)
 
 	// send login request
 	playerName := "somedood"
