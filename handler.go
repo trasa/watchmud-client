@@ -10,6 +10,9 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 	case *message.EnterRoomNotification:
 		c.handleEnterRoomNotification(resp.(*message.EnterRoomNotification))
 
+	case *message.ErrorResponse:
+		c.handleErrorResponse(resp.(*message.ErrorResponse))
+
 	case *message.ExitsResponse:
 		c.handleExitsResponse(resp.(*message.ExitsResponse))
 
