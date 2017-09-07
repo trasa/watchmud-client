@@ -7,6 +7,9 @@ import (
 
 func (c *Client) handleIncomingResponse(resp message.Response) {
 	switch resp.(type) {
+	case *message.EnterRoomNotification:
+		c.handleEnterRoomNotification(resp.(*message.EnterRoomNotification))
+
 	case *message.ExitsResponse:
 		c.handleExitsResponse(resp.(*message.ExitsResponse))
 
