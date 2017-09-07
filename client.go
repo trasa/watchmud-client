@@ -138,6 +138,9 @@ func (c *Client) printPrompt() {
 
 func (c *Client) handleIncomingResponse(resp message.Response) {
 	switch resp.(type) {
+	case *message.ExitsResponse:
+		c.handleExitsResponse(resp.(*message.ExitsResponse))
+
 	case *message.LoginResponse:
 		c.handleLoginResponse(resp.(*message.LoginResponse))
 
