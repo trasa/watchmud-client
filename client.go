@@ -130,24 +130,3 @@ func (c *Client) readStdin() {
 		c.SendLine(line)
 	}
 }
-
-func (c *Client) printPrompt() {
-	// TODO need to figure out when the right time to print the prompt is ...
-	fmt.Print("> ")
-}
-
-func (c *Client) handleIncomingResponse(resp message.Response) {
-	switch resp.(type) {
-	case *message.ExitsResponse:
-		c.handleExitsResponse(resp.(*message.ExitsResponse))
-
-	case *message.LoginResponse:
-		c.handleLoginResponse(resp.(*message.LoginResponse))
-
-	case *message.LookResponse:
-		c.handleLookResponse(resp.(*message.LookResponse))
-
-	default:
-		log.Println("unknown response type", resp)
-	}
-}
