@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/trasa/watchmud/message"
 	"log"
 	"os"
@@ -13,6 +14,9 @@ func main() {
 	// TODO read from yaml configuration or something
 	// TODO override with command line args
 
+	playerName := flag.String("player", "somedood", "player name")
+	flag.Parse()
+
 	// connect client
 	client, err := Connect(SERVER_ADDR)
 	if err != nil {
@@ -21,12 +25,11 @@ func main() {
 	signal.Notify(client.quitSignal, os.Interrupt)
 
 	// send login request
-	playerName := "somedood"
 	password := "NotImplemented"
 
 	loginReq := message.LoginRequest{
 		Request:    message.RequestBase{MessageType: "login"},
-		PlayerName: playerName,
+		PlayerName: *playerName,
 		Password:   password,
 	}
 	client.SendRequest(loginReq)
