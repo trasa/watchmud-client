@@ -28,6 +28,12 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 	case *message.MoveResponse:
 		c.handleMoveResponse(resp.(*message.MoveResponse))
 
+	case *message.SayResponse:
+		c.handleSayResponse(resp.(*message.SayResponse))
+
+	case *message.SayNotification:
+		c.handleSayNotification(resp.(*message.SayNotification))
+
 	default:
 		log.Println("unknown response type", resp)
 	}
