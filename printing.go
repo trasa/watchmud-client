@@ -30,7 +30,7 @@ func (c *Client) printRoom(room message.RoomDescription) {
 		}
 	}
 	// obvious exits
-	if exits, err := direction.ExitsToString(room.Exits); err == nil {
+	if exits, err := direction.ExitsToFormattedString(room.Exits); err == nil {
 		fmt.Println("Obvious Exits:", exits)
 	} else {
 		fmt.Println("Error Getting exits:", err)

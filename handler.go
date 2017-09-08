@@ -16,6 +16,9 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 	case *message.ExitsResponse:
 		c.handleExitsResponse(resp.(*message.ExitsResponse))
 
+	case *message.LeaveRoomNotification:
+		c.handleLeaveRoomNotification(resp.(*message.LeaveRoomNotification))
+
 	case *message.LoginResponse:
 		c.handleLoginResponse(resp.(*message.LoginResponse))
 
