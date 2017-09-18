@@ -32,6 +32,6 @@ func (c *Client) handleLeaveRoomNotification(note *message.LeaveRoomNotification
 		if err != nil {
 			fmt.Println("Error figuring out direction string for", note.Direction)
 		}
-		fmt.Println(note.PlayerName, "departs", dirName + ".")
+		fmt.Println(note.PlayerName, "departs", dirName+".")
 	}
 }
