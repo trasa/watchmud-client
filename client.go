@@ -2,12 +2,12 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/trasa/watchmud/message"
 	"log"
 	"os"
-	"encoding/json"
 )
 
 const COMM_LOGGING_ENABLED = false
