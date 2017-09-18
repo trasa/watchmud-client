@@ -7,7 +7,10 @@ import (
 	"github.com/trasa/watchmud/message"
 	"log"
 	"os"
+	"encoding/json"
 )
+
+const COMM_LOGGING_ENABLED = false
 
 type Client struct {
 	conn       *websocket.Conn
@@ -59,10 +62,11 @@ func (c *Client) SendRequest(request interface{}) {
 		Format: "request",
 		Value:  request,
 	}
-	/*
-		j, _ := json.Marshal(requestEnv)
+	//noinspection GoBoolExpressions
+	if COMM_LOGGING_ENABLED {
+		j, _ := json.Marshal(requestEnvelope)
 		log.Printf("sending \n%s\n", j)
-	*/
+	}
 	c.source <- requestEnvelope
 }
 
@@ -98,7 +102,10 @@ func (c *Client) readPump() {
 			c.isClosed = true
 			return
 		}
-		log.Printf("raw received: %s", msg)
+		//noinspection GoBoolExpressions
+		if COMM_LOGGING_ENABLED {
+			log.Printf("raw received: %s", msg)
+		}
 		if r, err := message.TranslateToResponse(msg); err != nil {
 			log.Println("unmarshal / translate error", err)
 		} else {
