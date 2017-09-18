@@ -129,7 +129,6 @@ func (c *Client) readStdin() {
 			return
 		}
 		line := scanner.Text()
-		log.Println(line)
 		if line == "/q" {
 			c.quit <- "QUIT command"
 			return

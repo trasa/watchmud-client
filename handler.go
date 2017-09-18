@@ -37,6 +37,9 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 	case *message.TellNotification:
 		c.handleTellNotification(resp.(*message.TellNotification))
 
+	case *message.TellResponse:
+		c.handleTellResponse(resp.(*message.TellResponse))
+
 	case *message.TellAllResponse:
 		c.handleTellAllResponse(resp.(*message.TellAllResponse))
 
@@ -47,6 +50,6 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 		c.handleWhoResponse(resp.(*message.WhoResponse))
 
 	default:
-		log.Println("unknown response type", resp)
+		log.Printf("client.handleIncomingResponse: unknown response type: %s", resp)
 	}
 }

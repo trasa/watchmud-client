@@ -33,6 +33,16 @@ func (c *Client) handleTellNotification(note *message.TellNotification) {
 	}
 }
 
+func (c *Client) handleTellResponse(resp *message.TellResponse) {
+	if resp.IsSuccessful() {
+		fmt.Println("sent.")
+	} else if resp.GetResultCode() == "TO_PLAYER_NOT_FOUND" {
+		fmt.Println("Nobody here by that name.")
+	} else {
+		c.printError(resp)
+	}
+}
+
 func (c *Client) handleTellAllResponse(resp *message.TellAllResponse) {
 	if resp.IsSuccessful() {
 		fmt.Println("sent.")
