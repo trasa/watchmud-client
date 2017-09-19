@@ -22,17 +22,21 @@ func (c *Client) printRoom(room message.RoomDescription) {
 	fmt.Println(room.Name)
 	fmt.Println()
 	fmt.Println(room.Description)
-	// other players
-	if len(room.Players) > 0 {
-		fmt.Println("Other Players:")
-		for _, p := range room.Players {
-			fmt.Println(p)
-		}
-	}
 	// obvious exits
 	if exits, err := direction.ExitsToFormattedString(room.Exits); err == nil {
 		fmt.Println("Obvious Exits:", exits)
 	} else {
 		fmt.Println("Error Getting exits:", err)
+	}
+	if len(room.Players) > 0 || len(room.Objects) > 0 {
+		fmt.Println()
+	}
+	// objects
+	for _, o := range room.Objects {
+		fmt.Println(o)
+	}
+	// other players, mobs
+	for _, p := range room.Players {
+		fmt.Printf("%s stands here.\n", p)
 	}
 }
