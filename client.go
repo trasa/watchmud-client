@@ -10,8 +10,6 @@ import (
 	"os"
 )
 
-const COMM_LOGGING_ENABLED = false
-
 type Client struct {
 	conn       *websocket.Conn
 	quit       chan interface{}

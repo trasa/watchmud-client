@@ -6,5 +6,8 @@ import (
 )
 
 func (c *Client) handleNoOpResponse(r *message.NoOpResponse) {
-	fmt.Printf("No Op: success=%t, result=%s\n", r.IsSuccessful(), r.GetResultCode())
+	if //noinspection GoBoolExpressions
+	VERBOSE_LOGGING {
+		fmt.Printf("No Op: success=%t, result=%s\n", r.IsSuccessful(), r.GetResultCode())
+	}
 }
