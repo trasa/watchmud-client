@@ -19,6 +19,9 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 	case *message.ExitsResponse:
 		c.handleExitsResponse(resp.(*message.ExitsResponse))
 
+	case *message.GetNotification:
+		c.handleGetNotification(resp.(*message.GetNotification))
+
 	case *message.GetResponse:
 		c.handleGetResponse(resp.(*message.GetResponse))
 

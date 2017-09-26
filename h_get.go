@@ -22,3 +22,13 @@ func (c *Client) handleGetResponse(r *message.GetResponse) {
 		c.printError(r)
 	}
 }
+
+func (c *Client) handleGetNotification(n *message.GetNotification) {
+	if n.IsSuccessful() {
+		// TODO clauses, articles, plural and so on...
+		fmt.Printf("%s gets a %s.\n", n.PlayerName, n.Target)
+		return
+	}
+	// weird error case
+	c.printError(n)
+}
