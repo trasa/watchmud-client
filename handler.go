@@ -7,6 +7,9 @@ import (
 
 func (c *Client) handleIncomingResponse(resp message.Response) {
 	switch resp.(type) {
+	case *message.DropNotification:
+		c.handleDropNotification(resp.(*message.DropNotification))
+
 	case *message.DropResponse:
 		c.handleDropResponse(resp.(*message.DropResponse))
 

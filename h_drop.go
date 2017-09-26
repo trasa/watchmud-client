@@ -22,3 +22,13 @@ func (c *Client) handleDropResponse(r *message.DropResponse) {
 		c.printError(r)
 	}
 }
+
+func (c *Client) handleDropNotification(n *message.DropNotification) {
+	if n.IsSuccessful() {
+		// TODO clauses, articles, plural and so on...
+		fmt.Printf("%s drops a %s.\n", n.PlayerName, n.Target)
+		return
+	}
+	// weird error case
+	c.printError(n)
+}
