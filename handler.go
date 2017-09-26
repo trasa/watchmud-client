@@ -37,6 +37,9 @@ func (c *Client) handleIncomingResponse(resp message.Response) {
 	case *message.MoveResponse:
 		c.handleMoveResponse(resp.(*message.MoveResponse))
 
+	case *message.NoOpResponse:
+		c.handleNoOpResponse(resp.(*message.NoOpResponse))
+
 	case *message.SayResponse:
 		c.handleSayResponse(resp.(*message.SayResponse))
 
