@@ -35,7 +35,10 @@ func (c *Client) printRoom(room message.RoomDescription) {
 	for _, o := range room.Objects {
 		fmt.Println(o)
 	}
-	// other players, mobs
+	// other players
+	for _, m := range room.Mobs {
+		fmt.Println(m)
+	}
 	for _, p := range room.Players {
 		fmt.Printf("%s stands here.\n", p)
 	}
