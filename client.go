@@ -36,7 +36,7 @@ func NewClient(conn *websocket.Conn) *Client {
 		conn:       conn,
 		quit:       make(chan interface{}),
 		quitSignal: make(chan os.Signal),
-		source:     make(chan interface{}),
+		source:     make(chan interface{}, 2),
 	}
 	go c.writePump()
 	go c.readPump()

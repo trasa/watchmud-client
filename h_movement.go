@@ -20,7 +20,7 @@ func (c *Client) handleEnterRoomNotification(note *message.EnterRoomNotification
 	if !note.IsSuccessful() {
 		c.printError(note)
 	} else {
-		fmt.Println(note.PlayerName, "enters.")
+		fmt.Println(note.Name, "enters.")
 	}
 }
 
@@ -32,6 +32,6 @@ func (c *Client) handleLeaveRoomNotification(note *message.LeaveRoomNotification
 		if err != nil {
 			fmt.Println("Error figuring out direction string for", note.Direction)
 		}
-		fmt.Println(note.PlayerName, "departs", dirName+".")
+		fmt.Println(note.Name, "departs", dirName+".")
 	}
 }

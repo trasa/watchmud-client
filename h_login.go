@@ -11,5 +11,7 @@ func (c *Client) handleLoginResponse(resp *message.LoginResponse) {
 	} else {
 		fmt.Println("Login Successful. Player name is", resp.Player.Name)
 		c.playerData = resp.Player
+		// get the room we start off in
+		c.SendLine("look")
 	}
 }
