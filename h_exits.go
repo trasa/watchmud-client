@@ -14,11 +14,11 @@ func (c *Client) handleExitsResponse(r *message.ExitsResponse) {
 		if len(r.ExitInfo) == 0 {
 			fmt.Println("None!")
 		} else {
-			for shortDir, roomName := range r.ExitInfo {
-				if dirName, err := direction.AbbreviationToString(shortDir); err == nil {
-					fmt.Printf("%s - %s\n", dirName, roomName)
+			for _, rexit := range r.ExitInfo {
+				if dirName, err := direction.DirectionToString(rexit.Direction); err == nil {
+					fmt.Printf("%s - %s\n", dirName, rexit.RoomName)
 				} else {
-					fmt.Printf("Error with direction name: %s %s - %s\n", shortDir, roomName, err)
+					fmt.Printf("Error with direction name: %s %s - %s\n", rexit.Direction, rexit.RoomName, err)
 				}
 			}
 		}
