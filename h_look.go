@@ -5,9 +5,9 @@ import (
 )
 
 func (c *Client) handleLookResponse(resp *message.LookResponse) {
-	if !resp.IsSuccessful() {
-		c.printError(resp)
+	if !resp.GetSuccess() {
+		c.printError(resp, resp.GetResultCode())
 	} else {
-		c.printRoom(resp.RoomDescription)
+		c.printRoom(resp.GetRoomDescription())
 	}
 }

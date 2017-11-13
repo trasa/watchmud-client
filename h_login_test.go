@@ -9,20 +9,19 @@ import (
 func TestLoginResponse_success(t *testing.T) {
 	c := NewTestClient()
 	resp := &message.LoginResponse{
-		Response: message.NewSuccessfulResponse("login_response"),
-		Player: message.PlayerData{
-			Name: "testguy",
-		},
+		Success:    true,
+		PlayerName: "testguy",
 	}
 	c.handleLoginResponse(resp)
-	assert.Equal(t, "testguy", c.playerData.Name)
+	assert.Equal(t, "testguy", c.playerName)
 }
 
 func TestLoginResponse_loginFailed(t *testing.T) {
 	c := NewTestClient()
 	resp := &message.LoginResponse{
-		Response: message.NewUnsuccessfulResponse("login_response", "BAD_DATA"),
+		Success:    false,
+		ResultCode: "BAD_DATA",
 	}
 	c.handleLoginResponse(resp)
-	assert.Equal(t, "", c.playerData.Name)
+	assert.Equal(t, "", c.playerName)
 }

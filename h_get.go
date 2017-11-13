@@ -6,7 +6,7 @@ import (
 )
 
 func (c *Client) handleGetResponse(r *message.GetResponse) {
-	if r.IsSuccessful() {
+	if r.Success {
 		fmt.Println("Ok.")
 		return
 	}
@@ -19,16 +19,16 @@ func (c *Client) handleGetResponse(r *message.GetResponse) {
 		fmt.Println("You don't see one of those.")
 
 	default:
-		c.printError(r)
+		c.printError(r, r.GetResultCode())
 	}
 }
 
 func (c *Client) handleGetNotification(n *message.GetNotification) {
-	if n.IsSuccessful() {
+	if n.Success {
 		// TODO clauses, articles, plural and so on...
 		fmt.Printf("%s gets a %s.\n", n.PlayerName, n.Target)
 		return
 	}
 	// weird error case
-	c.printError(n)
+	c.printError(n, n.GetResultCode())
 }

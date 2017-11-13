@@ -6,7 +6,7 @@ import (
 )
 
 func (c *Client) handleDropResponse(r *message.DropResponse) {
-	if r.IsSuccessful() {
+	if r.GetSuccess() {
 		fmt.Println("Dropped.")
 		return
 	}
@@ -19,16 +19,16 @@ func (c *Client) handleDropResponse(r *message.DropResponse) {
 		fmt.Println("You don't have one of those.")
 
 	default:
-		c.printError(r)
+		c.printError(r, r.GetResultCode())
 	}
 }
 
 func (c *Client) handleDropNotification(n *message.DropNotification) {
-	if n.IsSuccessful() {
+	if n.GetSuccess() {
 		// TODO clauses, articles, plural and so on...
 		fmt.Printf("%s drops a %s.\n", n.PlayerName, n.Target)
 		return
 	}
 	// weird error case
-	c.printError(n)
+	c.printError(n, n.GetResultCode())
 }

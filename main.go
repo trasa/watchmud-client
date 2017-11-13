@@ -8,7 +8,8 @@ import (
 	"os/signal"
 )
 
-const SERVER_ADDR = "ws://localhost:8888/ws"
+const SERVER_HOST = "localhost"
+const SERVER_PORT = 10000
 
 func main() {
 	// TODO read from yaml configuration or something
@@ -18,7 +19,7 @@ func main() {
 	flag.Parse()
 
 	// connect client
-	client, err := Connect(SERVER_ADDR)
+	client, err := Connect(SERVER_HOST, SERVER_PORT)
 	if err != nil {
 		log.Fatal("Failed to connect", err)
 	}
@@ -28,12 +29,14 @@ func main() {
 	password := "NotImplemented"
 
 	loginReq := message.LoginRequest{
-		Request:    message.RequestBase{MessageType: "login"},
 		PlayerName: *playerName,
 		Password:   password,
 	}
-	client.SendRequest(loginReq)
+	loginMsg, err := message.NewGameMessage(loginReq)
+	if err != nil {
+		log.Fatalf("Error creating login message: %v", err)
+	}
+	client.SendMessage(loginMsg)
 
 	client.readStdin()
-
 }

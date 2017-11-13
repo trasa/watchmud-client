@@ -6,7 +6,7 @@ import (
 )
 
 func (c *Client) handleWhoResponse(resp *message.WhoResponse) {
-	if resp.IsSuccessful() {
+	if resp.GetSuccess() {
 		fmt.Println("-- Who Is Here --")
 		if len(resp.PlayerInfo) == 0 {
 			fmt.Println("Nobody!")
@@ -16,6 +16,6 @@ func (c *Client) handleWhoResponse(resp *message.WhoResponse) {
 			}
 		}
 	} else {
-		c.printError(resp)
+		c.printError(resp, resp.GetResultCode())
 	}
 }

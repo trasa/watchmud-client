@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/trasa/watchmud/direction"
 	"github.com/trasa/watchmud/message"
+	"reflect"
 )
 
 func (c *Client) printPrompt() {
@@ -13,12 +14,12 @@ func (c *Client) printPrompt() {
 
 // for a response with IsSuccess == false,
 // print a generic error message.
-func (c *Client) printError(resp message.Response) {
-	fmt.Println("Error:", resp.GetMessageType(), resp.GetResultCode())
+func (c *Client) printError(response interface{}, resultCode string) {
+	fmt.Println("Error:", reflect.TypeOf(response).String(), resultCode)
 }
 
 // print this room description to the player
-func (c *Client) printRoom(room message.RoomDescription) {
+func (c *Client) printRoom(room *message.RoomDescription) {
 	fmt.Println(room.Name)
 	fmt.Println()
 	fmt.Println(room.Description)

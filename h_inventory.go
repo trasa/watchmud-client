@@ -7,8 +7,8 @@ import (
 )
 
 func (c *Client) handleInventoryResponse(r *message.InventoryResponse) {
-	if !r.IsSuccessful() {
-		c.printError(r)
+	if !r.GetSuccess() {
+		c.printError(r, r.GetResultCode())
 		return
 	}
 	fmt.Println("You are carrying:")
@@ -16,7 +16,7 @@ func (c *Client) handleInventoryResponse(r *message.InventoryResponse) {
 		fmt.Println(" Nothing.")
 	} else {
 		for _, item := range r.InventoryItems {
-			fmt.Printf("%s\t%s\t%s\n", item.Id, item.ShortDescription, object.CategoriesToString(item.ObjectCategories))
+			fmt.Printf("%s\t%s\t%s\n", item.Id, item.ShortDescription, object.CategoriesToString(object.IntsToCategories(item.ObjectCategories)))
 		}
 		fmt.Println()
 	}
