@@ -22,12 +22,15 @@ like that is still very much TODO. :(
     
 ## Commands
 
-help
-    get list of commands -Note- Not Implemented yet...
+- `help`
 
-help foo
-    get help for 'foo' -Note- Not Implemented yet...
+    get list of commands *Note* Not Implemented yet...
 
-quit or /q
+- `help foo`
+
+    get help for 'foo' *Note* Not Implemented yet...
+
+- `quit` or `/q`
+
     exit the client
 
