@@ -20,4 +20,14 @@ like that is still very much TODO. :(
 
     $ ./watchmud-client -player "Ed the Destroyer"
     
-    
+## Commands
+
+help
+    get list of commands -Note- Not Implemented yet...
+
+help foo
+    get help for 'foo' -Note- Not Implemented yet...
+
+quit or /q
+    exit the client
+
