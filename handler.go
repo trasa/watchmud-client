@@ -37,6 +37,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	case *message.GameMessage_LoginResponse:
 		c.handleLoginResponse(msg.GetLoginResponse())
 
+	case *message.GameMessage_LogoutNotification:
+		c.handleLogoutNotification(msg.GetLogoutNotification())
+
 	case *message.GameMessage_LookResponse:
 		c.handleLookResponse(msg.GetLookResponse())
 

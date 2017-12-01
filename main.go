@@ -8,18 +8,16 @@ import (
 	"os/signal"
 )
 
-const SERVER_HOST = "localhost"
-const SERVER_PORT = 10000
-
 func main() {
 	// TODO read from yaml configuration or something
-	// TODO override with command line args
 
 	playerName := flag.String("player", "somedood", "player name")
+	host := flag.String("host", "localhost", "server host name")
+	port := flag.Int("port", 10000, "server port")
 	flag.Parse()
 
 	// connect client
-	client, err := Connect(SERVER_HOST, SERVER_PORT)
+	client, err := Connect(*host, *port)
 	if err != nil {
 		log.Fatal("Failed to connect", err)
 	}

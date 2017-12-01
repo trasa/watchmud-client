@@ -53,13 +53,13 @@ func NewClient(stream message.MudComm_SendReceiveClient) *Client {
 	return &c
 }
 
-func (c *Client) SendLine(line string) {
+func (c *Client) sendTokens(tokens []string) {
 	if c.isClosed {
-		log.Println("not sending, c.isClosed", line)
+		log.Println("not sending, c.isClosed")
 		return
 	}
 	// translate line into message
-	msg, err := message.TranslateLineToMessage(line)
+	msg, err := message.TranslateLineToMessage(tokens)
 	if err != nil {
 		// TODO better error message
 		log.Printf("Error creating New Game Message for payload: %v", err)
@@ -121,10 +121,17 @@ func (c *Client) readStdin() {
 			return
 		}
 		line := scanner.Text()
-		if line == "/q" {
+		tokens := message.Tokenize(line)
+		if len(tokens) == 0 {
+			// do nothing...
+		} else if tokens[0] == "quit" || tokens[0] == "/q" {
 			c.quit <- "QUIT command"
-			return
+			return // <- exits the loop and the app
+		} else if tokens[0] == "help" {
+			printHelp(tokens)
+		} else {
+			// send to server
+			c.sendTokens(tokens)
 		}
-		c.SendLine(line)
 	}
 }
