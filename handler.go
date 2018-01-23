@@ -61,6 +61,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	case *message.GameMessage_SayNotification:
 		c.handleSayNotification(msg.GetSayNotification())
 
+	case *message.GameMessage_ShowEquipmentResponse:
+		c.handleShowEquipmentResponse(msg.GetShowEquipmentResponse())
+
 	case *message.GameMessage_TellNotification:
 		c.handleTellNotification(msg.GetTellNotification())
 
