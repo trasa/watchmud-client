@@ -12,6 +12,9 @@ func (c *Client) handleGetResponse(r *message.GetResponse) {
 	}
 	// otherwise...
 	switch r.GetResultCode() {
+	case "NO_TAKE":
+		fmt.Println("You can't take that!")
+
 	case "NO_TARGET":
 		fmt.Println("Get what?")
 
