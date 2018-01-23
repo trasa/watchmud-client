@@ -16,6 +16,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	case *message.GameMessage_EnterRoomNotification:
 		c.handleEnterRoomNotification(msg.GetEnterRoomNotification())
 
+	case *message.GameMessage_EquipResponse:
+		c.handleEquipResponse(msg.GetEquipResponse())
+
 	case *message.GameMessage_ErrorResponse:
 		c.handleErrorResponse(msg.GetErrorResponse())
 
