@@ -76,6 +76,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	case *message.GameMessage_TellAllNotification:
 		c.handleTellAllNotification(msg.GetTellAllNotification())
 
+	case *message.GameMessage_WearResponse:
+		c.handleWearResponse(msg.GetWearResponse())
+
 	case *message.GameMessage_WhoResponse:
 		c.handleWhoResponse(msg.GetWhoResponse())
 
