@@ -34,6 +34,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	case *message.GameMessage_InventoryResponse:
 		c.handleInventoryResponse(msg.GetInventoryResponse())
 
+	case *message.GameMessage_KillResponse:
+		c.handleKillResponse(msg.GetKillResponse())
+
 	case *message.GameMessage_LeaveRoomNotification:
 		c.handleLeaveRoomNotification(msg.GetLeaveRoomNotification())
 
