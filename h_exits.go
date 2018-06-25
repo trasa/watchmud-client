@@ -18,7 +18,7 @@ func (c *Client) handleExitsResponse(r *message.ExitsResponse) {
 				if dirName, err := direction.DirectionToString(direction.Direction(rexit.Direction)); err == nil {
 					fmt.Printf("%s - %s\n", dirName, rexit.RoomName)
 				} else {
-					fmt.Printf("Error with direction name: %s %s - %s\n", rexit.Direction, rexit.RoomName, err)
+					fmt.Printf("Error with direction name: %d %s - %s\n", rexit.Direction, rexit.RoomName, err)
 				}
 			}
 		}
