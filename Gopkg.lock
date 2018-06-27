@@ -38,7 +38,6 @@
   version = "v1.2.2"
 
 [[projects]]
-  branch = "dev"
   name = "github.com/trasa/watchmud"
   packages = [
     "behavior",
@@ -47,7 +46,8 @@
     "object",
     "slot"
   ]
-  revision = "dc80a40bac7830a9545549db020f81b9b8c5e28c"
+  revision = "fd049acea76b5a7f44989e95d9d430676527f4b9"
+  version = "v0.0.1"
 
 [[projects]]
   branch = "master"
@@ -125,6 +125,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9c6574d11833944ce413402c87aa12aa98eb512b22047b73c148b17ebf87bc35"
+  inputs-digest = "9826f361ef379bb366054eaaf920fd9a2532b82d7e0251d9ad3b81fe1b8fb074"
   solver-name = "gps-cdcl"
   solver-version = 1
