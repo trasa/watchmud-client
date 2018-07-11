@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/trasa/watchmud/message"
+	"github.com/trasa/watchmud-message"
 	"log"
 )
 

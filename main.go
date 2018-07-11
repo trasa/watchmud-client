@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/trasa/watchmud/message"
+	"github.com/trasa/watchmud-message"
 	"log"
 	"os"
 	"os/signal"

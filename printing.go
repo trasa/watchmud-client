@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/trasa/watchmud/direction"
-	"github.com/trasa/watchmud/message"
+	"github.com/trasa/watchmud-message"
+	"github.com/trasa/watchmud-message/direction"
 	"reflect"
 )
 

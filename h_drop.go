@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/trasa/watchmud/message"
+	"github.com/trasa/watchmud-message"
 )
 
 func (c *Client) handleDropResponse(r *message.DropResponse) {

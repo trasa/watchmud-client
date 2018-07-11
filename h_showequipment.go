@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/trasa/watchmud/message"
-	"github.com/trasa/watchmud/slot"
+	"github.com/trasa/watchmud-message"
+	"github.com/trasa/watchmud-message/slot"
 )
 
 func (c *Client) handleShowEquipmentResponse(r *message.ShowEquipmentResponse) {

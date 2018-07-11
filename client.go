@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
-	"github.com/trasa/watchmud/message"
+	"github.com/trasa/watchmud-message"
 	"google.golang.org/grpc"
 	"log"
 	"os"

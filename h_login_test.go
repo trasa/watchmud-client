@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stretchr/testify/assert"
-	"github.com/trasa/watchmud/message"
+	"github.com/trasa/watchmud-message"
 	"testing"
 )
 

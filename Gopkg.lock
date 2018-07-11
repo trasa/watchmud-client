@@ -26,28 +26,20 @@
   version = "v1.0.0"
 
 [[projects]]
-  name = "github.com/satori/go.uuid"
-  packages = ["."]
-  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
-  version = "v1.2.0"
-
-[[projects]]
   name = "github.com/stretchr/testify"
   packages = ["assert"]
   revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
   version = "v1.2.2"
 
 [[projects]]
-  name = "github.com/trasa/watchmud"
+  name = "github.com/trasa/watchmud-message"
   packages = [
-    "behavior",
+    ".",
     "direction",
-    "message",
-    "object",
     "slot"
   ]
-  revision = "fd049acea76b5a7f44989e95d9d430676527f4b9"
-  version = "v0.0.1"
+  revision = "6bedb079eb87ebfcf47c6beb9e28594bed38c802"
+  version = "v0.0.3"
 
 [[projects]]
   branch = "master"
@@ -125,6 +117,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9826f361ef379bb366054eaaf920fd9a2532b82d7e0251d9ad3b81fe1b8fb074"
+  inputs-digest = "1fd48f6f150d1289157e89055ec7a1ee18869936b038d9a2dd32681a346bad96"
   solver-name = "gps-cdcl"
   solver-version = 1

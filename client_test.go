@@ -1,6 +1,6 @@
 package main
 
-import "github.com/trasa/watchmud/message"
+import "github.com/trasa/watchmud-message"
 
 func NewTestClient() *Client {
 	return &Client{

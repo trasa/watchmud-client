@@ -30,8 +30,8 @@
   version = "1.2.2"
 
 [[constraint]]
-  name = "github.com/trasa/watchmud"
-  version = "v0.0.1"
+  name = "github.com/trasa/watchmud-message"
+  version = "v0.0.3"
 
 [[constraint]]
   name = "google.golang.org/grpc"
