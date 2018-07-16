@@ -11,6 +11,8 @@ func (c *Client) handleMoveResponse(resp *message.MoveResponse) {
 		c.printRoom(resp.RoomDescription)
 	} else if resp.GetResultCode() == "CANT_GO_THAT_WAY" {
 		fmt.Println("There's no exit that way.")
+	} else if resp.GetResultCode() == "IN_A_FIGHT" {
+		fmt.Println("Your fighting for your life!")
 	} else {
 		c.printError(resp, resp.GetResultCode())
 	}

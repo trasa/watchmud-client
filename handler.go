@@ -7,6 +7,9 @@ import (
 
 func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	switch msg.Inner.(type) {
+	case *message.GameMessage_DeathNotification:
+		c.handleDeathNotification(msg.GetDeathNotification())
+
 	case *message.GameMessage_DropNotification:
 		c.handleDropNotification(msg.GetDropNotification())
 
