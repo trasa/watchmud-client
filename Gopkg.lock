@@ -42,8 +42,8 @@
     "direction",
     "slot"
   ]
-  revision = "b1933efcfc57764d2500f4986c22b722ed1acb3c"
-  version = "v0.0.4"
+  revision = "026543cfa2592ad20118e6f88ad5b2883c9aa992"
+  version = "v0.0.5"
 
 [[projects]]
   branch = "master"
@@ -57,7 +57,13 @@
     "internal/timeseries",
     "trace"
   ]
-  revision = "afe8f62b1d6bbd81f31868121a50b06d8188e1f9"
+  revision = "49c15d80dfbc983ea25246ee959d970efe09ec09"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "bd9dbc187b6e1dacfdd2722a87e83093c2d7bd6e"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -84,7 +90,7 @@
   branch = "master"
   name = "google.golang.org/genproto"
   packages = ["googleapis/rpc/status"]
-  revision = "80063a038e333bbe006c878e4c5ce4c74d055498"
+  revision = "daca94659cb50e9f37c1b834680f2e46358f10b0"
 
 [[projects]]
   name = "google.golang.org/grpc"
@@ -102,7 +108,9 @@
     "internal",
     "internal/backoff",
     "internal/channelz",
+    "internal/envconfig",
     "internal/grpcrand",
+    "internal/transport",
     "keepalive",
     "metadata",
     "naming",
@@ -112,15 +120,14 @@
     "resolver/passthrough",
     "stats",
     "status",
-    "tap",
-    "transport"
+    "tap"
   ]
-  revision = "168a6198bcb0ef175f7dacec0b8691fc141dc9b8"
-  version = "v1.13.0"
+  revision = "32fb0ac620c32ba40a4626ddf94d90d12cce3455"
+  version = "v1.14.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8ef60317f414e5c1643f97e288db6e3f6c2e4173989ff2903e647304b487079c"
+  inputs-digest = "3e9ea5e7dc51a8f3a98646155561a42db3e50c8138f52d002c1882e74dd33ce2"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -61,6 +61,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	case *message.GameMessage_Pong:
 		c.handlePong(msg.GetPong())
 
+	case *message.GameMessage_RoomStatusResponse:
+		c.handleRoomStatusResponse(msg.GetRoomStatusResponse())
+
 	case *message.GameMessage_SayResponse:
 		c.handleSayResponse(msg.GetSayResponse())
 

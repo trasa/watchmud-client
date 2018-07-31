@@ -44,3 +44,18 @@ func (c *Client) printRoom(room *message.RoomDescription) {
 		fmt.Printf("%s stands here.\n", p)
 	}
 }
+
+// Print an array of strings (flags, aliases, that sort of thing)
+func (c *Client) printStringList(list []string) {
+	flagLen := len(list)
+	if flagLen > 0 {
+		fmt.Printf("[")
+		for idx, f := range list {
+			fmt.Printf("%s", f)
+			if idx < flagLen-1 {
+				fmt.Printf(", ")
+			}
+		}
+		fmt.Printf("]")
+	}
+}
