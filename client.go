@@ -102,7 +102,10 @@ func (c *Client) readPump() {
 			log.Fatalf("failed to receive: %v", err)
 			return
 		}
-		c.handleIncomingMessage(in)
+		if err := c.handleIncomingMessage(in); err != nil {
+			log.Fatalf("Error handling incoming message: %v", err)
+			return
+		}
 	}
 }
 

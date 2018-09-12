@@ -35,7 +35,7 @@ func (c *Client) handleRoomStatusResponse(resp *message.RoomStatusResponse) {
 		fmt.Printf("-----------------------------------------------------\n")
 		for _, p := range resp.PlayerInfo {
 			fmt.Printf("%-16s(%d/%d)\n", p.Name, p.CurrentHealth, p.MaxHealth)
-			fmt.Printf("-------------------------\n")
+			fmt.Printf("-----------------------------------------------------\n")
 		}
 		fmt.Println()
 	}
@@ -54,7 +54,7 @@ func (c *Client) handleRoomStatusResponse(resp *message.RoomStatusResponse) {
 			fmt.Printf("Flags: ")
 			c.printStringList(m.Flags)
 			fmt.Printf("\n")
-			fmt.Printf("-------------------------\n")
+			fmt.Printf("-----------------------------------------------------\n")
 		}
 		fmt.Println()
 	}
@@ -76,7 +76,7 @@ func (c *Client) handleRoomStatusResponse(resp *message.RoomStatusResponse) {
 			fmt.Printf("Behaviors: ")
 			c.printStringList(item.Behaviors)
 			fmt.Printf("\n")
-			fmt.Printf("-------------------------\n")
+			fmt.Printf("-----------------------------------------------------\n")
 		}
 		fmt.Println()
 	}

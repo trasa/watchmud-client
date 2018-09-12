@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
+func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 	switch msg.Inner.(type) {
 	case *message.GameMessage_DeathNotification:
 		c.handleDeathNotification(msg.GetDeathNotification())
@@ -44,7 +44,7 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 		c.handleLeaveRoomNotification(msg.GetLeaveRoomNotification())
 
 	case *message.GameMessage_LoginResponse:
-		c.handleLoginResponse(msg.GetLoginResponse())
+		return c.handleLoginResponse(msg.GetLoginResponse())
 
 	case *message.GameMessage_LogoutNotification:
 		c.handleLogoutNotification(msg.GetLogoutNotification())
@@ -97,4 +97,5 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) {
 	default:
 		log.Printf("client.handleIncomingResponse: unknown response type: %s", msg.Inner)
 	}
+	return nil
 }
