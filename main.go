@@ -36,5 +36,18 @@ func main() {
 	}
 	client.SendMessage(loginMsg)
 
+	/*
+		// create player
+		createPlayerReq := message.CreatePlayerRequest{
+			PlayerName: *playerName,
+			Password:   "NotImplemented",
+		}
+		createPlayerMsg, err := message.NewGameMessage(createPlayerReq)
+		if err != nil {
+			log.Fatalf("Error creating CreatePlayerRequest: %v", err)
+		}
+		client.SendMessage(createPlayerMsg)
+	*/
+
 	client.readStdin()
 }

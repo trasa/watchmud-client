@@ -7,6 +7,9 @@ import (
 
 func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 	switch msg.Inner.(type) {
+	case *message.GameMessage_CreatePlayerResponse:
+		c.handleCreatePlayerResponse(msg.GetCreatePlayerResponse())
+
 	case *message.GameMessage_DeathNotification:
 		c.handleDeathNotification(msg.GetDeathNotification())
 
