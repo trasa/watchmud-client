@@ -1,23 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"github.com/trasa/watchmud-message"
 )
 
 func (c *Client) handleEquipResponse(r *message.EquipResponse) {
 	if r.GetSuccess() {
-		fmt.Println("Ok.")
+		UIPrintln("Ok.")
 		return
 	}
 	switch r.GetResultCode() {
 	case "NO_SLOT_GIVEN":
-		fmt.Println("Equip where?")
+		UIPrintln("Equip where?")
 	case "NO_TARGET":
-		fmt.Println("What do you want to equip?")
+		UIPrintln("What do you want to equip?")
 	case "TARGET_NOT_FOUND":
-		fmt.Println("You don't have one of those.")
+		UIPrintln("You don't have one of those.")
 	default:
-		c.printError(r, r.GetResultCode())
+		UIPrintError(r, r.GetResultCode())
 	}
 }

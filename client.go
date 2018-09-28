@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"context"
 	"fmt"
 	"github.com/trasa/watchmud-message"
@@ -51,6 +50,36 @@ func NewClient(stream message.MudComm_SendReceiveClient) *Client {
 	go c.writePump()
 	go c.readPump()
 	return &c
+}
+
+func (c *Client) processInput(buf string) {
+	// based on the state of the app ...
+	tokens := message.Tokenize(buf)
+	if len(tokens) == 0 {
+		// do nothing...
+	} else if tokens[0] == "login" {
+		// do login
+		// send login request
+		password := "NotImplemented"
+
+		loginReq := message.LoginRequest{
+			PlayerName: ActiveConfig.playerName,
+			Password:   password,
+		}
+		loginMsg, err := message.NewGameMessage(loginReq)
+		if err != nil {
+			log.Fatalf("Error creating login message: %v", err)
+		}
+		c.SendMessage(loginMsg)
+
+	} else if tokens[0] == "quit" || tokens[0] == "/q" {
+		c.quit <- "QUIT command"
+	} else if tokens[0] == "help" {
+		printHelp(tokens)
+	} else {
+		// send to server
+		c.sendTokens(tokens)
+	}
 }
 
 func (c *Client) sendTokens(tokens []string) {
@@ -109,6 +138,7 @@ func (c *Client) readPump() {
 	}
 }
 
+/*
 // Read stdin for line input and send to the server
 // until we receive a command like /q, in which case
 // this terminates.
@@ -124,17 +154,7 @@ func (c *Client) readStdin() {
 			return
 		}
 		line := scanner.Text()
-		tokens := message.Tokenize(line)
-		if len(tokens) == 0 {
-			// do nothing...
-		} else if tokens[0] == "quit" || tokens[0] == "/q" {
-			c.quit <- "QUIT command"
-			return // <- exits the loop and the app
-		} else if tokens[0] == "help" {
-			printHelp(tokens)
-		} else {
-			// send to server
-			c.sendTokens(tokens)
-		}
+		c.sendLine(line)
 	}
 }
+*/

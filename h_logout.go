@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/trasa/watchmud-message"
 )
 
@@ -12,5 +11,5 @@ func (c *Client) handleLogoutNotification(resp *message.LogoutNotification) {
 	} else {
 		name = resp.PlayerName
 	}
-	fmt.Printf("%s disappears.\n", name)
+	UIPrintf("%s disappears.\n", name)
 }

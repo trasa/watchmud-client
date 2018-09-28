@@ -6,8 +6,8 @@ import (
 
 func (c *Client) handleLookResponse(resp *message.LookResponse) {
 	if !resp.GetSuccess() {
-		c.printError(resp, resp.GetResultCode())
+		UIPrintError(resp, resp.GetResultCode())
 	} else {
-		c.printRoom(resp.GetRoomDescription())
+		UIPrintRoom(resp.GetRoomDescription())
 	}
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"github.com/trasa/watchmud-message"
 	"log"
 	"os"
 	"os/signal"
@@ -16,38 +15,20 @@ func main() {
 	port := flag.Int("port", 10000, "server port")
 	flag.Parse()
 
+	ActiveConfig = &Config{
+		playerName: *playerName,
+		serverHost: *host,
+		serverPort: *port,
+	}
+
 	// connect client
-	client, err := Connect(*host, *port)
+	client, err := Connect(ActiveConfig.serverHost, ActiveConfig.serverPort)
 	if err != nil {
 		log.Fatal("Failed to connect", err)
 	}
 	signal.Notify(client.quitSignal, os.Interrupt)
 
-	// send login request
-	password := "NotImplemented"
-
-	loginReq := message.LoginRequest{
-		PlayerName: *playerName,
-		Password:   password,
-	}
-	loginMsg, err := message.NewGameMessage(loginReq)
-	if err != nil {
-		log.Fatalf("Error creating login message: %v", err)
-	}
-	client.SendMessage(loginMsg)
-
-	/*
-		// create player
-		createPlayerReq := message.CreatePlayerRequest{
-			PlayerName: *playerName,
-			Password:   "NotImplemented",
-		}
-		createPlayerMsg, err := message.NewGameMessage(createPlayerReq)
-		if err != nil {
-			log.Fatalf("Error creating CreatePlayerRequest: %v", err)
-		}
-		client.SendMessage(createPlayerMsg)
-	*/
-
-	client.readStdin()
+	clientui := NewClientUI(client)
+	// this runs ui event loop
+	clientui.initUi()
 }

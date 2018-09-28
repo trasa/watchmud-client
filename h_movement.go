@@ -1,39 +1,38 @@
 package main
 
 import (
-	"fmt"
 	"github.com/trasa/watchmud-message"
 	"github.com/trasa/watchmud-message/direction"
 )
 
 func (c *Client) handleMoveResponse(resp *message.MoveResponse) {
 	if resp.GetSuccess() {
-		c.printRoom(resp.RoomDescription)
+		UIPrintRoom(resp.RoomDescription)
 	} else if resp.GetResultCode() == "CANT_GO_THAT_WAY" {
-		fmt.Println("There's no exit that way.")
+		UIPrintln("There's no exit that way.")
 	} else if resp.GetResultCode() == "IN_A_FIGHT" {
-		fmt.Println("Your fighting for your life!")
+		UIPrintln("Your fighting for your life!")
 	} else {
-		c.printError(resp, resp.GetResultCode())
+		UIPrintError(resp, resp.GetResultCode())
 	}
 }
 
 func (c *Client) handleEnterRoomNotification(note *message.EnterRoomNotification) {
 	if !note.GetSuccess() {
-		c.printError(note, note.GetResultCode())
+		UIPrintError(note, note.GetResultCode())
 	} else {
-		fmt.Println(note.Name, "enters.")
+		UIPrintln(note.Name, "enters.")
 	}
 }
 
 func (c *Client) handleLeaveRoomNotification(note *message.LeaveRoomNotification) {
 	if !note.GetSuccess() {
-		c.printError(note, note.GetResultCode())
+		UIPrintError(note, note.GetResultCode())
 	} else {
 		dirName, err := direction.DirectionToString(direction.Direction(note.Direction))
 		if err != nil {
-			fmt.Println("Error figuring out direction string for", note.Direction)
+			UIPrintln("Error figuring out direction string for", note.Direction)
 		}
-		fmt.Println(note.Name, "departs", dirName+".")
+		UIPrintln(note.Name, "departs", dirName+".")
 	}
 }

@@ -1,23 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"github.com/trasa/watchmud-message"
 	"github.com/trasa/watchmud-message/slot"
 )
 
 func (c *Client) handleShowEquipmentResponse(r *message.ShowEquipmentResponse) {
 	if !r.GetSuccess() {
-		c.printError(r, r.GetResultCode())
+		UIPrintError(r, r.GetResultCode())
 		return
 	}
-	fmt.Println("You are using:")
+	UIPrintln("You are using:")
 	if len(r.EquipmentInfo) == 0 {
-		fmt.Println("Nothing.")
+		UIPrintln("Nothing.")
 	} else {
 		for _, item := range r.EquipmentInfo {
-			fmt.Printf("%s\t%s\t%s", slot.Location(item.SlotLocation).String(), item.Id, item.ShortDescription)
+			UIPrintf("%s\t%s\t%s", slot.Location(item.SlotLocation).String(), item.Id, item.ShortDescription)
 		}
-		fmt.Println()
+		UIPrintln()
 	}
 }
