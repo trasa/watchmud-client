@@ -19,7 +19,7 @@ func (c *Client) handleKillResponse(r *message.KillResponse) {
 	case "NO_FIGHT":
 		UIPrintln("Something about them convinces you not to fight.")
 	default:
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 	}
 
 }

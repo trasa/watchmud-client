@@ -17,6 +17,6 @@ func (c *Client) handleWearResponse(r *message.WearResponse) {
 	case "TARGET_NOT_FOUND":
 		UIPrintln("Wear what?")
 	default:
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 	}
 }

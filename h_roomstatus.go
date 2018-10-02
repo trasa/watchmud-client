@@ -6,7 +6,7 @@ import (
 
 func (c *Client) handleRoomStatusResponse(resp *message.RoomStatusResponse) {
 	if !resp.Success {
-		UIPrintError(resp, resp.ResultCode)
+		UIPrintResponseError(resp, resp.ResultCode)
 		return
 	}
 

@@ -58,20 +58,9 @@ func (c *Client) processInput(buf string) {
 	if len(tokens) == 0 {
 		// do nothing...
 	} else if tokens[0] == "login" {
-		// do login
-		// send login request
-		password := "NotImplemented"
-
-		loginReq := message.LoginRequest{
-			PlayerName: ActiveConfig.playerName,
-			Password:   password,
+		if err := c.doLogin(tokens); err != nil {
+			UIPrintError(err)
 		}
-		loginMsg, err := message.NewGameMessage(loginReq)
-		if err != nil {
-			log.Fatalf("Error creating login message: %v", err)
-		}
-		c.SendMessage(loginMsg)
-
 	} else if tokens[0] == "help" {
 		printHelp(tokens)
 	} else {

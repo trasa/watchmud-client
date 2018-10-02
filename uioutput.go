@@ -8,9 +8,13 @@ import (
 	"reflect"
 )
 
+func UIPrintError(err error) {
+	UIPrintln("Error: ", err)
+}
+
 // for a response with IsSuccess == false,
 // print a generic error message.
-func UIPrintError(response interface{}, resultCode string) {
+func UIPrintResponseError(response interface{}, resultCode string) {
 	UIPrintln("Error:", reflect.TypeOf(response).String(), resultCode)
 }
 

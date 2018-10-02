@@ -17,6 +17,6 @@ func (c *Client) handleEquipResponse(r *message.EquipResponse) {
 	case "TARGET_NOT_FOUND":
 		UIPrintln("You don't have one of those.")
 	default:
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 	}
 }

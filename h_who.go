@@ -15,6 +15,6 @@ func (c *Client) handleWhoResponse(resp *message.WhoResponse) {
 			}
 		}
 	} else {
-		UIPrintError(resp, resp.GetResultCode())
+		UIPrintResponseError(resp, resp.GetResultCode())
 	}
 }

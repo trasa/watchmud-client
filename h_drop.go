@@ -18,7 +18,7 @@ func (c *Client) handleDropResponse(r *message.DropResponse) {
 		UIPrintln("You don't have one of those.")
 
 	default:
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 	}
 }
 
@@ -29,5 +29,5 @@ func (c *Client) handleDropNotification(n *message.DropNotification) {
 		return
 	}
 	// weird error case
-	UIPrintError(n, n.GetResultCode())
+	UIPrintResponseError(n, n.GetResultCode())
 }

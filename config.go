@@ -1,7 +1,6 @@
 package main
 
 type Config struct {
-	playerName string
 	serverHost string
 	serverPort int
 }

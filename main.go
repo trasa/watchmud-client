@@ -10,13 +10,11 @@ import (
 func main() {
 	// TODO read from yaml configuration or something
 
-	playerName := flag.String("player", "somedood", "player name")
 	host := flag.String("host", "localhost", "server host name")
 	port := flag.Int("port", 10000, "server port")
 	flag.Parse()
 
 	ActiveConfig = &Config{
-		playerName: *playerName,
 		serverHost: *host,
 		serverPort: *port,
 	}

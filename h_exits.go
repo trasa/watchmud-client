@@ -7,7 +7,7 @@ import (
 
 func (c *Client) handleExitsResponse(r *message.ExitsResponse) {
 	if !r.GetSuccess() {
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 	} else {
 		UIPrintln("Obvious Exits:")
 		if len(r.ExitInfo) == 0 {

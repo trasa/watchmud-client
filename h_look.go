@@ -5,9 +5,9 @@ import (
 )
 
 func (c *Client) handleLookResponse(resp *message.LookResponse) {
-	if !resp.GetSuccess() {
-		UIPrintError(resp, resp.GetResultCode())
-	} else {
+	if resp.GetSuccess() {
 		UIPrintRoom(resp.GetRoomDescription())
+	} else {
+		UIPrintResponseError(resp, resp.GetResultCode())
 	}
 }

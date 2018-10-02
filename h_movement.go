@@ -13,13 +13,13 @@ func (c *Client) handleMoveResponse(resp *message.MoveResponse) {
 	} else if resp.GetResultCode() == "IN_A_FIGHT" {
 		UIPrintln("Your fighting for your life!")
 	} else {
-		UIPrintError(resp, resp.GetResultCode())
+		UIPrintResponseError(resp, resp.GetResultCode())
 	}
 }
 
 func (c *Client) handleEnterRoomNotification(note *message.EnterRoomNotification) {
 	if !note.GetSuccess() {
-		UIPrintError(note, note.GetResultCode())
+		UIPrintResponseError(note, note.GetResultCode())
 	} else {
 		UIPrintln(note.Name, "enters.")
 	}
@@ -27,7 +27,7 @@ func (c *Client) handleEnterRoomNotification(note *message.EnterRoomNotification
 
 func (c *Client) handleLeaveRoomNotification(note *message.LeaveRoomNotification) {
 	if !note.GetSuccess() {
-		UIPrintError(note, note.GetResultCode())
+		UIPrintResponseError(note, note.GetResultCode())
 	} else {
 		dirName, err := direction.DirectionToString(direction.Direction(note.Direction))
 		if err != nil {

@@ -11,7 +11,7 @@ func (c *Client) handleSayResponse(resp *message.SayResponse) {
 		if resp.GetResultCode() == "NOT_IN_A_ROOM" {
 			UIPrintln("You yell into the darkness.")
 		} else {
-			UIPrintError(resp, resp.GetResultCode())
+			UIPrintResponseError(resp, resp.GetResultCode())
 		}
 	}
 }
@@ -20,7 +20,7 @@ func (c *Client) handleSayNotification(note *message.SayNotification) {
 	if note.Success {
 		UIPrintf("%s says '%s'.\n", note.Sender, note.Value)
 	} else {
-		UIPrintError(note, note.GetResultCode())
+		UIPrintResponseError(note, note.GetResultCode())
 	}
 }
 
@@ -28,7 +28,7 @@ func (c *Client) handleTellNotification(note *message.TellNotification) {
 	if note.GetSuccess() {
 		UIPrintf("%s tells you '%s'.\n", note.Sender, note.Value)
 	} else {
-		UIPrintError(note, note.GetResultCode())
+		UIPrintResponseError(note, note.GetResultCode())
 	}
 }
 
@@ -38,7 +38,7 @@ func (c *Client) handleTellResponse(resp *message.TellResponse) {
 	} else if resp.GetResultCode() == "TO_PLAYER_NOT_FOUND" {
 		UIPrintln("Nobody here by that name.")
 	} else {
-		UIPrintError(resp, resp.GetResultCode())
+		UIPrintResponseError(resp, resp.GetResultCode())
 	}
 }
 
@@ -46,7 +46,7 @@ func (c *Client) handleTellAllResponse(resp *message.TellAllResponse) {
 	if resp.GetSuccess() {
 		UIPrintln("sent.")
 	} else {
-		UIPrintError(resp, resp.GetResultCode())
+		UIPrintResponseError(resp, resp.GetResultCode())
 	}
 }
 
@@ -54,6 +54,6 @@ func (c *Client) handleTellAllNotification(note *message.TellAllNotification) {
 	if note.GetSuccess() {
 		UIPrintf("tell_all %s> %s", note.Sender, note.Value)
 	} else {
-		UIPrintError(note, note.GetResultCode())
+		UIPrintResponseError(note, note.GetResultCode())
 	}
 }

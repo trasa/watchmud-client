@@ -67,7 +67,7 @@ func layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		fmt.Fprintln(outputView, "Type 'login' to login to the server.")
+		fmt.Fprintln(outputView, "Type 'login [playername]' to login to the server.")
 		fmt.Fprintln(outputView, "Type ctrl-c to exit.")
 	}
 

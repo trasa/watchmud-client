@@ -7,7 +7,7 @@ import (
 
 func (c *Client) handleShowEquipmentResponse(r *message.ShowEquipmentResponse) {
 	if !r.GetSuccess() {
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 		return
 	}
 	UIPrintln("You are using:")

@@ -21,7 +21,7 @@ func (c *Client) handleGetResponse(r *message.GetResponse) {
 		UIPrintln("You don't see one of those.")
 
 	default:
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 	}
 }
 
@@ -32,5 +32,5 @@ func (c *Client) handleGetNotification(n *message.GetNotification) {
 		return
 	}
 	// weird error case
-	UIPrintError(n, n.GetResultCode())
+	UIPrintResponseError(n, n.GetResultCode())
 }

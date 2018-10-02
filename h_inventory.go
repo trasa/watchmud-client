@@ -6,7 +6,7 @@ import (
 
 func (c *Client) handleInventoryResponse(r *message.InventoryResponse) {
 	if !r.GetSuccess() {
-		UIPrintError(r, r.GetResultCode())
+		UIPrintResponseError(r, r.GetResultCode())
 		return
 	}
 	UIPrintln("You are carrying:")
