@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/jroimartin/gocui"
 	"io"
 	"log"
@@ -62,10 +63,12 @@ func layout(g *gocui.Gui) error {
 	bottomOfOutput := int(float64(maxY) * outputHeightPercentage)
 
 	// tries to create the view, if it already exists throws an error
-	if _, err := g.SetView("output", 0, 0, maxX-1, bottomOfOutput); err != nil {
+	if outputView, err := g.SetView("output", 0, 0, maxX-1, bottomOfOutput); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
+		fmt.Fprintln(outputView, "Type 'login' to login to the server.")
+		fmt.Fprintln(outputView, "Type ctrl-c to exit.")
 	}
 
 	// tries to create the view, if it already exists throws an error

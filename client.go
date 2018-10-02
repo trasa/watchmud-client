@@ -72,8 +72,6 @@ func (c *Client) processInput(buf string) {
 		}
 		c.SendMessage(loginMsg)
 
-	} else if tokens[0] == "quit" || tokens[0] == "/q" {
-		c.quit <- "QUIT command"
 	} else if tokens[0] == "help" {
 		printHelp(tokens)
 	} else {
