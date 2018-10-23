@@ -11,7 +11,8 @@ func (c *Client) handleCreatePlayerResponse(resp *message.CreatePlayerResponse) 
 		return errors.New(resp.GetResultCode())
 	} else {
 		UIPrintln("Create Player successful. Player name is", resp.PlayerName)
-		c.playerName = resp.PlayerName
+
+		// TODO clientState
 		// TODO whatever else we need to do on creating a new user...
 
 	}

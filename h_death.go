@@ -6,7 +6,7 @@ import (
 
 func (c *Client) handleDeathNotification(resp *message.DeathNotification) {
 	if resp.IsPlayer {
-		if resp.Target == c.playerName {
+		if c.IsTargetYou(resp.Target) {
 			// hey that's us
 			UIPrintln("YOU'RE DEAD!")
 			// TODO what else here ...

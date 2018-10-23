@@ -27,7 +27,7 @@ func (suite *LoginResponseSuite) success() {
 		PlayerName: "testguy",
 	}
 	suite.Client.handleLoginResponse(resp)
-	suite.Assert().Equal("testguy", suite.Client.playerName)
+	suite.Assert().Equal("testguy", suite.Client.clientState.playerName)
 }
 
 func (suite *LoginResponseSuite) loginFailed() {
@@ -36,5 +36,5 @@ func (suite *LoginResponseSuite) loginFailed() {
 		ResultCode: "BAD_DATA",
 	}
 	suite.Client.handleLoginResponse(resp)
-	suite.Assert().Equal("", suite.Client.playerName)
+	suite.Assert().Equal("", suite.Client.clientState.playerName)
 }

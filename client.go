@@ -10,12 +10,12 @@ import (
 )
 
 type Client struct {
-	stream     message.MudComm_SendReceiveClient
-	quit       chan interface{}
-	quitSignal chan os.Signal
-	source     chan *message.GameMessage // sends up to server
-	isClosed   bool
-	playerName string
+	stream      message.MudComm_SendReceiveClient
+	quit        chan interface{}
+	quitSignal  chan os.Signal
+	source      chan *message.GameMessage // sends up to server
+	isClosed    bool
+	clientState *ClientState
 }
 
 func Connect(serverAddress string, port int) (*Client, error) {
@@ -42,10 +42,11 @@ func Connect(serverAddress string, port int) (*Client, error) {
 // establish the writePump and readPump for that Client.
 func NewClient(stream message.MudComm_SendReceiveClient) *Client {
 	c := Client{
-		stream:     stream,
-		quit:       make(chan interface{}),
-		quitSignal: make(chan os.Signal),
-		source:     make(chan *message.GameMessage, 2),
+		stream:      stream,
+		quit:        make(chan interface{}),
+		quitSignal:  make(chan os.Signal),
+		source:      make(chan *message.GameMessage, 2),
+		clientState: NewClientState(),
 	}
 	go c.writePump()
 	go c.readPump()
@@ -124,24 +125,3 @@ func (c *Client) readPump() {
 		}
 	}
 }
-
-/*
-// Read stdin for line input and send to the server
-// until we receive a command like /q, in which case
-// this terminates.
-func (c *Client) readStdin() {
-	scanner := bufio.NewScanner(os.Stdin)
-	// seriously annoying: this blocks forever, even if SIGINT
-	// has been sent. There doesn't seem to be a way to set up a
-	// signal handler here to break us out of this for loop if
-	// received
-	for scanner.Scan() {
-		if c.isClosed {
-			log.Println("c.isClosed")
-			return
-		}
-		line := scanner.Text()
-		c.sendLine(line)
-	}
-}
-*/
