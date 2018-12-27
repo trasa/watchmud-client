@@ -24,27 +24,15 @@ create_player:
 	else goto initial_state
 */
 
-type GameState int32
-
-//go:generate stringer -type=GameState
-const (
-	Initial GameState = iota
-	Login
-	CreatePlayer
-	InGame
-)
-
 type InputHandler func(c *Client, tokens []string)
 
 type ClientState struct {
-	currentState GameState
 	playerName   string
 	inputHandler InputHandler
 }
 
 func NewClientState() *ClientState {
 	return &ClientState{
-		currentState: Initial,
 		inputHandler: initialInputHandler,
 	}
 }

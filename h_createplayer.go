@@ -2,10 +2,10 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"github.com/trasa/watchmud-message"
 )
 
+/*
 func (c *Client) beginCreatePlayer(token []string) error {
 	if c.clientState.currentState != Initial {
 		return errors.New(fmt.Sprintf("You cannot 'begin createPlayer', you are in state '%s'\n", c.clientState.currentState))
@@ -15,6 +15,7 @@ func (c *Client) beginCreatePlayer(token []string) error {
 	UIPrintln("What is your player's name?")
 	return nil
 }
+*/
 
 func (c *Client) handleCreatePlayerResponse(resp *message.CreatePlayerResponse) error {
 	if !resp.GetSuccess() {

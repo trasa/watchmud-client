@@ -15,7 +15,6 @@ func TestTargetingSuite(t *testing.T) {
 }
 
 func (suite *TargetingSuite) SetupTest() {
-	suite.testClient.clientState.currentState = InGame
 	suite.testClient.clientState.playerName = "testdood"
 }
 
