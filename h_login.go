@@ -5,24 +5,13 @@ import (
 	"github.com/trasa/watchmud-message"
 )
 
-func (c *Client) doLogin(tokens []string) error {
-	if c.clientState.currentState != Initial {
-		UIPrintf("You cannot 'login', you are in state '%s'\n", c.clientState.currentState)
-		return nil
-	}
-	c.clientState.currentState = Login
-
+// send a login request based on state
+func (c *Client) sendLoginRequest() error {
 	// send login request
 	password := "NotImplemented"
-	var playerName string
-	if len(tokens) < 2 {
-		playerName = "somedood"
-	} else {
-		playerName = tokens[1]
-	}
 
 	loginReq := message.LoginRequest{
-		PlayerName: playerName,
+		PlayerName: c.clientState.playerName,
 		Password:   password,
 	}
 	loginMsg, err := message.NewGameMessage(loginReq)
@@ -37,12 +26,13 @@ func (c *Client) handleLoginResponse(resp *message.LoginResponse) error {
 	if !resp.GetSuccess() {
 		UIPrintln("Login Attempt Failed! ", resp.GetResultCode())
 		// we are not logged in, don't return error as this will terminate the client.
-		c.clientState.handleLoginFailed()
+		UIPrintln("So who are you?")
+		c.clientState.inputHandler = loginNameInputHandler
 		return nil
 	} else {
 		UIPrintln("Login Successful. Player name is", resp.PlayerName)
-		// we are logged in
-		c.clientState.handleLoginSucceeded(resp.PlayerName)
+		// we are logged in - time for normal input?
+		c.clientState.inputHandler = gameInputHandler
 
 		// get the room we start off in (look request)
 		msg, err := message.NewGameMessage(message.LookRequest{})

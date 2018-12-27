@@ -34,36 +34,69 @@ const (
 	InGame
 )
 
+type InputHandler func(c *Client, tokens []string)
+
 type ClientState struct {
 	currentState GameState
 	playerName   string
+	inputHandler InputHandler
 }
 
 func NewClientState() *ClientState {
 	return &ClientState{
 		currentState: Initial,
+		inputHandler: initialInputHandler,
 	}
 }
 
-/*
-Moves from Login -> Initial
-*/
-func (cs *ClientState) handleLoginFailed() {
-	if cs.currentState != Login {
-		UIPrintf("ClientState received handleLoginFailed but is in %s state\n", cs.currentState)
+// The initial InputHandler for ClientState. Move from here to login or create.
+func initialInputHandler(c *Client, tokens []string) {
+	switch tokens[0] {
+	case "login":
+		// next step is to get player name - do we have one already?
+		if len(tokens) < 2 {
+			UIPrintln("Who are you?")
+			// set input handler for 'get player name'
+			c.clientState.inputHandler = loginNameInputHandler
+		} else {
+			c.clientState.playerName = tokens[1]
+			if err := c.sendLoginRequest(); err != nil {
+				UIPrintError(err)
+				// keep same input handler
+			} else {
+				// set next step input handler
+			}
+		}
+		break
+	case "create":
+		// TODO create player not implemented yet
+		UIPrintln("Create Player not implemented yet, try 'login' or 'help'")
+		// keep same handler
+		break
+
+	case "help":
+		// TODO context sensitive help
+		printHelp(tokens)
+		// keep same handler
+
+	default:
+		UIPrintln("Unknown command, try 'login' or 'create' or 'help'")
+		// keep same handler
 	}
-	cs.currentState = Initial
-	UIPrintln("(DEBUG) currentState now Initial")
 }
 
-/*
-Moves from Login -> InGame
-*/
-func (cs *ClientState) handleLoginSucceeded(playerName string) {
-	if cs.currentState != Login {
-		UIPrintf("ClientState received handleLoginSucceeded but is in %s state\n", cs.currentState)
+func loginNameInputHandler(c *Client, tokens []string) {
+	UIPrintln("Hello '", tokens[0], "'")
+	c.clientState.playerName = tokens[0]
+	if err := c.sendLoginRequest(); err != nil {
+		UIPrintError(err)
+		UIPrintln("No really, who are you?")
+		// same handler
+	} else {
+		// ok now what?
 	}
-	cs.playerName = playerName
-	cs.currentState = InGame
-	UIPrintln("(DEBUG) currentState now InGame")
+}
+
+func gameInputHandler(c *Client, tokens []string) {
+	c.sendTokens(tokens)
 }
