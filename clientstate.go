@@ -51,15 +51,12 @@ func initialInputHandler(c *Client, tokens []string) {
 			if err := c.sendLoginRequest(); err != nil {
 				UIPrintError(err)
 				// keep same input handler
-			} else {
-				// set next step input handler
 			}
 		}
 		break
 	case "create":
-		// TODO create player not implemented yet
-		UIPrintln("Create Player not implemented yet, try 'login' or 'help'")
-		// keep same handler
+		UIPrintln("Ok, let's create a new character. What is your name?")
+		c.clientState.inputHandler = createPlayerNameInputHandler
 		break
 
 	case "help":
@@ -73,6 +70,7 @@ func initialInputHandler(c *Client, tokens []string) {
 	}
 }
 
+// now we have a name, lets send a login request
 func loginNameInputHandler(c *Client, tokens []string) {
 	UIPrintln("Hello '", tokens[0], "'")
 	c.clientState.playerName = tokens[0]
@@ -80,11 +78,23 @@ func loginNameInputHandler(c *Client, tokens []string) {
 		UIPrintError(err)
 		UIPrintln("No really, who are you?")
 		// same handler
-	} else {
-		// ok now what?
 	}
 }
 
+// Default game handler, do the normal stuff with the
+// input as if you were in the game.
 func gameInputHandler(c *Client, tokens []string) {
 	c.sendTokens(tokens)
+}
+
+func createPlayerNameInputHandler(c *Client, tokens []string) {
+	UIPrintln("Create a player named", tokens[0])
+	c.clientState.playerName = tokens[0]
+	if err := c.sendCreatePlayerRequest(); err != nil {
+		UIPrintError(err)
+		UIPrintln("Let's try again. Whats your name?")
+		// same handler
+	} else {
+
+	}
 }
