@@ -70,31 +70,15 @@ func initialInputHandler(c *Client, tokens []string) {
 	}
 }
 
-// now we have a name, lets send a login request
-func loginNameInputHandler(c *Client, tokens []string) {
-	UIPrintln("Hello '", tokens[0], "'")
-	c.clientState.playerName = tokens[0]
-	if err := c.sendLoginRequest(); err != nil {
-		UIPrintError(err)
-		UIPrintln("No really, who are you?")
-		// same handler
-	}
-}
-
 // Default game handler, do the normal stuff with the
 // input as if you were in the game.
 func gameInputHandler(c *Client, tokens []string) {
 	c.sendTokens(tokens)
 }
 
-func createPlayerNameInputHandler(c *Client, tokens []string) {
-	UIPrintln("Create a player named", tokens[0])
-	c.clientState.playerName = tokens[0]
-	if err := c.sendCreatePlayerRequest(); err != nil {
-		UIPrintError(err)
-		UIPrintln("Let's try again. Whats your name?")
-		// same handler
-	} else {
-
-	}
+// Game handler when we're not allowing input from the user
+// probably because we're waiting for a response message from
+// the server
+func voidInputHandler(c *Client, tokens []string) {
+	UIPrintln("Please wait ...")
 }

@@ -24,6 +24,10 @@ func (c *Client) sendCreatePlayerRequest() error {
 }
 
 func (c *Client) handleCreatePlayerResponse(resp *message.CreatePlayerResponse) error {
+	// TODO deal with case where name chosen has already been taken -
+	// for that matter, most errors should do this:
+	// don't lose all the player's choices, allow them to fix up their Request,
+	// and then try to re-send it.
 	if !resp.GetSuccess() {
 		UIPrintln("Create Player Attempt Failed! ", resp.GetResultCode())
 		return errors.New(resp.GetResultCode())
