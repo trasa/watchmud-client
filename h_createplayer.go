@@ -12,8 +12,8 @@ func (c *Client) sendCreatePlayerRequest() error {
 	createReq := message.CreatePlayerRequest{
 		PlayerName: c.clientState.playerName,
 		Password:   password,
-		Race:       0,
-		Class:      0,
+		Race:       c.clientState.race,
+		Class:      c.clientState.class,
 	}
 	createMsg, err := message.NewGameMessage(createReq)
 	if err != nil {
@@ -31,6 +31,7 @@ func (c *Client) handleCreatePlayerResponse(resp *message.CreatePlayerResponse) 
 	if !resp.GetSuccess() {
 		UIPrintln("Create Player Attempt Failed! ", resp.GetResultCode())
 		return errors.New(resp.GetResultCode())
+		// TODO recover from create error gracefully
 	} else {
 		UIPrintln("Create Player successful. Player name is", resp.PlayerName)
 		c.clientState.inputHandler = gameInputHandler

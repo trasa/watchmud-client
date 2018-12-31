@@ -30,6 +30,9 @@ func (c *Client) handleLoginResponse(resp *message.LoginResponse) error {
 		c.clientState.inputHandler = loginNameInputHandler
 		return nil
 	} else {
+
+		// TODO, set client state values here
+
 		UIPrintln("Login Successful. Player name is", resp.PlayerName)
 		// we are logged in - time for normal input?
 		c.clientState.inputHandler = gameInputHandler

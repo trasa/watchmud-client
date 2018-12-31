@@ -63,30 +63,6 @@ func (c *Client) processInput(buf string) {
 
 	// hand off to correct inputHandler
 	c.clientState.inputHandler(c, tokens)
-
-	//switch c.clientState.currentState {
-	//case Initial:
-	//	if tokens[0] == "login" {
-	//		beginLoginState(c, tokens)
-	//		//if err := c.doLogin(tokens); err != nil {
-	//		//	UIPrintError(err)
-	//		//}
-	//	} else if tokens[0] == "create" {
-	//		if err := c.beginCreatePlayer(tokens); err != nil {
-	//			UIPrintError(err)
-	//		}
-	//	} else if tokens[0] == "help" {
-	//		printHelp(tokens) // TODO context sensitive help for 'initial' state
-	//	}
-	//case Login:
-	//	// TODO is there anything to do with input while in login state?
-	//	printHelp(tokens)
-	//
-	//case CreatePlayer:
-	//	// TODO clientState handler for creating players
-	//default:
-	//	c.sendTokens(tokens)
-	//}
 }
 
 func (c *Client) sendTokens(tokens []string) {

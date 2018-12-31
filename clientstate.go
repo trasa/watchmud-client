@@ -29,6 +29,8 @@ type InputHandler func(c *Client, tokens []string)
 type ClientState struct {
 	playerName   string
 	inputHandler InputHandler
+	race         int32
+	class        int32
 }
 
 func NewClientState() *ClientState {
