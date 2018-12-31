@@ -13,35 +13,25 @@ func createPlayerNameInputHandler(c *Client, tokens []string) {
 
 	displayRaceChoices()
 	c.clientState.inputHandler = createPlayerRaceInputHandler
-
-	/*
-		if err := c.sendCreatePlayerRequest(); err != nil {
-			UIPrintError(err)
-			UIPrintln("Let's try again. Whats your name?")
-			// same handler
-		} else {
-			// otherwise we're waiting for the CreatePlayerResponse
-			c.clientState.inputHandler = voidInputHandler
-		}
-	*/
 }
 
 func displayRaceChoices() {
-	UIPrintln("Select a Race:")
-	UIPrintln("0 - Human")
-	UIPrintln("1 - Dwarf")
-	UIPrintln("2 - Elf")
-	UIPrintln("3 - Halfling")
-	UIPrintln("4 - Dragonborn")
-	UIPrintln("5 - Half-Elf")
-	UIPrintln("6 - Half-Orc")
-	UIPrintln("7 - Gnome")
-	UIPrintln("8 - Tiefling")
-	UIPrintln()
-	UIPrintln("(or help for more information)")
-	UIPrintln("ex. HELP DWARF")
+	UIPrintln("Select a Race:\n" +
+		"0 - Human\n" +
+		"1 - Dwarf\n" +
+		"2 - Elf\n" +
+		"3 - Halfling\n" +
+		"4 - Dragonborn\n" +
+		"5 - Half-Elf\n" +
+		"6 - Half-Orc\n" +
+		"7 - Gnome\n" +
+		"8 - Tiefling\n" +
+		"\n" +
+		"(or help for more information)\n" +
+		"ex. HELP DWARF")
 }
 
+// select a race
 func createPlayerRaceInputHandler(c *Client, tokens []string) {
 	if strings.EqualFold("help", tokens[0]) {
 		UIPrintln("Help not implemented yet, sorry...") // TODO implement help..
@@ -61,25 +51,25 @@ func createPlayerRaceInputHandler(c *Client, tokens []string) {
 }
 
 func displayClassChoices() {
-	UIPrintln("Select a class:")
-	UIPrintln("0 - Fighter")
-	UIPrintln("1 - Cleric")
-	UIPrintln("2 - Rogue")
-	UIPrintln("3 - Barbarian")
-	UIPrintln("4 - Bard")
-	UIPrintln("5 - Druid")
-	UIPrintln("6 - Monk")
-	UIPrintln("7 - Paladin")
-	UIPrintln("8 - Ranger")
-	UIPrintln("9 - Sorcerer")
-	UIPrintln("10 - Warlock")
-	UIPrintln("11 - Wizard")
-	UIPrintln()
-	UIPrintln("(or help for more information)")
-	UIPrintln("ex. HELP FIGHTER")
-
+	UIPrintln("Select a class:\n" +
+		"0 - Fighter\n" +
+		"1 - Cleric\n" +
+		"2 - Rogue\n" +
+		"3 - Barbarian\n" +
+		"4 - Bard\n" +
+		"5 - Druid\n" +
+		"6 - Monk\n" +
+		"7 - Paladin\n" +
+		"8 - Ranger\n" +
+		"9 - Sorcerer\n" +
+		"10 - Warlock\n" +
+		"11 - Wizard\n" +
+		"\n" +
+		"(or help for more information)" +
+		"ex. HELP FIGHTER")
 }
 
+// select a class
 func createPlayerClassInputHandler(c *Client, tokens []string) {
 	if strings.EqualFold("help", tokens[0]) {
 		UIPrintln("Help not implemented yet, sorry...") // TODO implement help...

@@ -65,8 +65,8 @@ func UIPrintln(a ...interface{}) {
 		fmt.Println(a...)
 	} else {
 		activeClientUI.g.Update(func(g *gocui.Gui) error {
-			fmt.Fprintln(activeClientUI.outputView(), a...)
-			return nil
+			_, err := fmt.Fprintln(activeClientUI.outputView(), a...)
+			return err
 		})
 	}
 }
@@ -76,8 +76,8 @@ func UIPrintf(format string, a ...interface{}) {
 		fmt.Printf(format, a...)
 	} else {
 		activeClientUI.g.Update(func(g *gocui.Gui) error {
-			fmt.Fprintf(activeClientUI.outputView(), format, a...)
-			return nil
+			_, err := fmt.Fprintf(activeClientUI.outputView(), format, a...)
+			return err
 		})
 	}
 }
