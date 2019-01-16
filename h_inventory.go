@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/trasa/watchmud-message"
+	"strings"
 )
 
 func (c *Client) handleInventoryResponse(r *message.InventoryResponse) {
@@ -9,13 +11,15 @@ func (c *Client) handleInventoryResponse(r *message.InventoryResponse) {
 		UIPrintResponseError(r, r.GetResultCode())
 		return
 	}
-	UIPrintln("You are carrying:")
+	var str strings.Builder
+	str.WriteString("You are carrying:\n")
 	if len(r.InventoryItems) == 0 {
-		UIPrintln(" Nothing.")
+		str.WriteString(" Nothing.\n")
 	} else {
 		for _, item := range r.InventoryItems {
-			UIPrintf("%s\t%s\n", item.Id, item.ShortDescription)
+			str.WriteString(fmt.Sprintf("%s\t%s\n", item.Id, item.ShortDescription))
 		}
-		UIPrintln()
+		str.WriteString("\n")
 	}
+	UIPrintf(str.String())
 }
