@@ -6,6 +6,7 @@ import (
 	"github.com/trasa/watchmud-message"
 	"github.com/trasa/watchmud-message/direction"
 	"reflect"
+	"strings"
 )
 
 func UIPrintError(err error) {
@@ -20,43 +21,53 @@ func UIPrintResponseError(response interface{}, resultCode string) {
 
 // print this room description to the player
 func UIPrintRoom(room *message.RoomDescription) {
-	UIPrintln(room.Name)
-	UIPrintln()
-	UIPrintln(room.Description)
+	var str strings.Builder
+
+	str.WriteString(room.Name + "\n")
+	str.WriteString(room.Description + "\n");
 	// obvious exits
 	if exits, err := direction.ExitsToFormattedString(room.Exits); err == nil {
-		UIPrintln("Obvious Exits:", exits)
+		str.WriteString("Obvious Exits: ")
+		str.WriteString(exits)
+		str.WriteString("\n")
+
 	} else {
-		UIPrintln("Error Getting exits:", err)
+		str.WriteString("Error getting exits:")
+		str.WriteString(fmt.Sprintf("%v\n", err))
 	}
 	if len(room.Players) > 0 || len(room.Objects) > 0 {
-		UIPrintln()
+		str.WriteString("\n")
 	}
 	// objects
 	for _, o := range room.Objects {
-		UIPrintln(o)
+		str.WriteString(o + "\n")
 	}
 	// other players
 	for _, m := range room.Mobs {
-		UIPrintln(m)
+		str.WriteString(m + "\n")
 	}
 	for _, p := range room.Players {
-		UIPrintf("%s stands here.\n", p)
+		str.WriteString(fmt.Sprintf("%s stands here.\n", p))
 	}
+
+	UIPrintf(str.String())
 }
 
 // Print an array of strings (flags, aliases, that sort of thing)
 func UIPrintStringList(list []string) {
+	var str strings.Builder
 	flagLen := len(list)
 	if flagLen > 0 {
-		UIPrintf("[")
+		str.WriteString("[")
 		for idx, f := range list {
-			UIPrintf("%s", f)
+			str.WriteString(f)
 			if idx < flagLen-1 {
-				UIPrintf(", ")
+				str.WriteString(", ")
 			}
 		}
-		UIPrintf("]")
+		str.WriteString("]")
+
+		UIPrintf(str.String())
 	}
 }
 
