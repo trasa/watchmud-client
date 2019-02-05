@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/trasa/watchmud-message"
+	"strings"
 )
 
 func (c *Client) handleRoomStatusResponse(resp *message.RoomStatusResponse) {
@@ -10,74 +12,76 @@ func (c *Client) handleRoomStatusResponse(resp *message.RoomStatusResponse) {
 		return
 	}
 
-	UIPrintln()
-	UIPrintf("-----------------------------------------------------\n")
-	UIPrintf("ROOM STATUS\n")
-	UIPrintf("-----------------------------------------------------\n")
+	var str strings.Builder
+	str.WriteString("\n-----------------------------------------------------\n")
+	str.WriteString("ROOM STATUS\n")
+	str.WriteString("-----------------------------------------------------\n")
 
-	UIPrintf("Room %s (%s)\nZone %s (%s)\n", resp.Name, resp.Id, resp.ZoneName, resp.ZoneId)
-	UIPrintf("'%s'\n", resp.Description)
-	UIPrintf("\n")
+	str.WriteString(fmt.Sprintf("Room %s (%s)\nZone %s (%s)\n", resp.Name, resp.Id, resp.ZoneName, resp.ZoneId))
+	str.WriteString(fmt.Sprintf("'%s'\n", resp.Description))
+	str.WriteString("\n")
 
 	if len(resp.GetDirections()) > 0 {
-		UIPrintf("Exit to Room\n")
-		UIPrintf("-----------------------------------------------------\n")
+		str.WriteString("Exit to Room\n")
+		str.WriteString("-----------------------------------------------------\n")
 		for _, d := range resp.GetDirections() {
-			UIPrintf("%-7s %-20s %-10s  ", d.Dir, d.RoomId, d.ZoneId)
-			UIPrintStringList(d.Flags)
-			UIPrintf("\n")
+			str.WriteString(fmt.Sprintf("%-7s %-20s %-10s  ", d.Dir, d.RoomId, d.ZoneId))
+			str.WriteString(ListToStringBuilder(d.Flags))
+			str.WriteString("\n")
 		}
-		UIPrintln()
+		str.WriteString("\n")
 	}
 	if len(resp.PlayerInfo) > 0 {
-		UIPrintf("Players\n")
-		UIPrintf("-----------------------------------------------------\n")
+		str.WriteString("Players\n")
+		str.WriteString("-----------------------------------------------------\n")
 		for _, p := range resp.PlayerInfo {
-			UIPrintf("%-16s(%d/%d)\n", p.Name, p.CurrentHealth, p.MaxHealth)
-			UIPrintf("-----------------------------------------------------\n")
+			str.WriteString(fmt.Sprintf("%-16s(%d/%d)\n", p.Name, p.CurrentHealth, p.MaxHealth))
+			str.WriteString("-----------------------------------------------------\n")
 		}
-		UIPrintln()
+		str.WriteString("\n")
 	}
 	if len(resp.MobInfo) > 0 {
-		UIPrintf("Mobs\n")
-		UIPrintf("-----------------------------------------------------\n")
+		str.WriteString("Mobs\n")
+		str.WriteString("-----------------------------------------------------\n")
 		for _, m := range resp.MobInfo {
-			UIPrintf("%s (%d/%d) Aliases: ", m.Name, m.CurrentHealth, m.MaxHealth)
-			UIPrintStringList(m.Aliases)
-			UIPrintf("\n")
-			UIPrintf("ID: %s\n", m.Id)
-			UIPrintf("Defn: %s\n", m.DefinitionId)
-			UIPrintf("Zone: %s\n", m.ZoneId)
-			UIPrintf("'%s'\n", m.DescriptionInRoom)
-			UIPrintf("Descr:\t%s\n", m.ShortDescription)
-			UIPrintf("Flags: ")
-			UIPrintStringList(m.Flags)
-			UIPrintf("\n")
-			UIPrintf("-----------------------------------------------------\n")
+			str.WriteString(fmt.Sprintf("%s (%d/%d) Aliases: ", m.Name, m.CurrentHealth, m.MaxHealth))
+			str.WriteString(ListToStringBuilder(m.Aliases))
+			str.WriteString("\n")
+			str.WriteString(fmt.Sprintf("ID: %s\n", m.Id))
+			str.WriteString(fmt.Sprintf("Defn: %s\n", m.DefinitionId))
+			str.WriteString(fmt.Sprintf("Zone: %s\n", m.ZoneId))
+			str.WriteString(fmt.Sprintf("'%s'\n", m.DescriptionInRoom))
+			str.WriteString(fmt.Sprintf("Descr:\t%s\n", m.ShortDescription))
+			str.WriteString("Flags: ")
+			str.WriteString(ListToStringBuilder(m.Flags))
+			str.WriteString("\n")
+			str.WriteString("-----------------------------------------------------\n")
 		}
-		UIPrintln()
+		str.WriteString("\n")
 	}
 	if len(resp.InventoryInfo) > 0 {
-		UIPrintf("Items\n")
-		UIPrintf("-----------------------------------------------------\n")
+		str.WriteString("Items\n")
+		str.WriteString("-----------------------------------------------------\n")
 		for _, item := range resp.InventoryInfo {
-			UIPrintf("%-16s Aliases: ", item.Name)
-			UIPrintStringList(item.Aliases)
-			UIPrintf("\n")
-			UIPrintf("ID: %s\n", item.Id)
-			UIPrintf("Defn: %s\n", item.DefinitionId)
-			UIPrintf("Zone: %s\n", item.ZoneId)
-			UIPrintf("Categories: ")
-			UIPrintStringList(item.Categories)
-			UIPrintf("\n")
-			UIPrintf("Descr: %s\n", item.ShortDescription)
-			UIPrintf("On Ground: %s\n", item.DescriptionOnGround)
-			UIPrintf("Behaviors: ")
-			UIPrintStringList(item.Behaviors)
-			UIPrintf("\n")
-			UIPrintf("-----------------------------------------------------\n")
+			str.WriteString(fmt.Sprintf("%-16s Aliases: ", item.Name))
+			str.WriteString(ListToStringBuilder(item.Aliases))
+			str.WriteString("\n")
+			str.WriteString(fmt.Sprintf("ID: %s\n", item.Id))
+			str.WriteString(fmt.Sprintf("Defn: %s\n", item.DefinitionId))
+			str.WriteString(fmt.Sprintf("Zone: %s\n", item.ZoneId))
+			str.WriteString("Categories: ")
+			str.WriteString(ListToStringBuilder(item.Categories))
+			str.WriteString("\n")
+			str.WriteString(fmt.Sprintf("Descr: %s\n", item.ShortDescription))
+			str.WriteString(fmt.Sprintf("On Ground: %s\n", item.DescriptionOnGround))
+			str.WriteString("Behaviors: ")
+			str.WriteString(ListToStringBuilder(item.Behaviors))
+			str.WriteString("\n")
+			str.WriteString("-----------------------------------------------------\n")
 		}
-		UIPrintln()
+		str.WriteString("\n")
 	}
-	UIPrintf("\n")
+	str.WriteString("\n")
+
+	UIPrint(str)
 }

@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/trasa/watchmud-message"
 	"github.com/trasa/watchmud-message/slot"
+	"strings"
 )
 
 func (c *Client) handleShowEquipmentResponse(r *message.ShowEquipmentResponse) {
@@ -10,13 +12,15 @@ func (c *Client) handleShowEquipmentResponse(r *message.ShowEquipmentResponse) {
 		UIPrintResponseError(r, r.GetResultCode())
 		return
 	}
-	UIPrintln("You are using:")
+	var str strings.Builder
+	str.WriteString("You are using:\n")
 	if len(r.EquipmentInfo) == 0 {
-		UIPrintln("Nothing.")
+		str.WriteString("Nothing.\n")
 	} else {
 		for _, item := range r.EquipmentInfo {
-			UIPrintf("%s\t%s\t%s", slot.Location(item.SlotLocation).String(), item.Id, item.ShortDescription)
+			str.WriteString(fmt.Sprintf("%s\t%s\t%s\n", slot.Location(item.SlotLocation).String(), item.Id, item.ShortDescription))
 		}
-		UIPrintln()
+		str.WriteString("\n")
 	}
+	UIPrint(str)
 }

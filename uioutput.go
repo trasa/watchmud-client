@@ -24,7 +24,7 @@ func UIPrintRoom(room *message.RoomDescription) {
 	var str strings.Builder
 
 	str.WriteString(room.Name + "\n")
-	str.WriteString(room.Description + "\n");
+	str.WriteString(room.Description + "\n")
 	// obvious exits
 	if exits, err := direction.ExitsToFormattedString(room.Exits); err == nil {
 		str.WriteString("Obvious Exits: ")
@@ -50,11 +50,11 @@ func UIPrintRoom(room *message.RoomDescription) {
 		str.WriteString(fmt.Sprintf("%s stands here.\n", p))
 	}
 
-	UIPrintf(str.String())
+	UIPrint(str)
 }
 
-// Print an array of strings (flags, aliases, that sort of thing)
-func UIPrintStringList(list []string) {
+// Convert an array of strings (flags, aliases, that sort of thing) into a single string
+func ListToStringBuilder(list []string) string {
 	var str strings.Builder
 	flagLen := len(list)
 	if flagLen > 0 {
@@ -66,9 +66,13 @@ func UIPrintStringList(list []string) {
 			}
 		}
 		str.WriteString("]")
-
-		UIPrintf(str.String())
 	}
+	return str.String()
+}
+
+// Print an array of strings (flags, aliases, that sort of thing)
+func UIPrintStringList(list []string) {
+	UIPrintf(ListToStringBuilder(list))
 }
 
 func UIPrintln(a ...interface{}) {
@@ -91,4 +95,8 @@ func UIPrintf(format string, a ...interface{}) {
 			return err
 		})
 	}
+}
+
+func UIPrint(str strings.Builder) {
+	UIPrintf(str.String())
 }
