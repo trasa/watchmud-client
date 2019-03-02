@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/trasa/watchmud-message"
+	"strings"
 )
 
 // send a login request based on state
@@ -24,10 +25,12 @@ func (c *Client) sendLoginRequest() error {
 
 func (c *Client) handleLoginResponse(resp *message.LoginResponse) error {
 	if !resp.GetSuccess() {
-		UIPrintln("Login Attempt Failed! ", resp.GetResultCode())
+		var str strings.Builder
+		str.WriteString("Login Attempt Failed! " + resp.GetResultCode() + "\n")
 		// we are not logged in, don't return error as this will terminate the client.
-		UIPrintln("So who are you?")
+		str.WriteString("So who are you?\n")
 		c.clientState.inputHandler = loginNameInputHandler
+		UIPrint(str)
 		return nil
 	} else {
 
