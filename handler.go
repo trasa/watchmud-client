@@ -64,6 +64,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 	case *message.GameMessage_Pong:
 		c.handlePong(msg.GetPong())
 
+	case *message.GameMessage_RecallResponse:
+		c.handleRecallResponse(msg.GetRecallResponse())
+
 	case *message.GameMessage_RoomStatusResponse:
 		c.handleRoomStatusResponse(msg.GetRoomStatusResponse())
 
