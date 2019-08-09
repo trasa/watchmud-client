@@ -7,9 +7,7 @@ import (
 )
 
 func (c *Client) sendDataRequest() error {
-	req := message.DataRequest{
-		DataType: "races",
-	}
+	req := message.DataRequest{}
 	msg, err := message.NewGameMessage(req)
 	if err != nil {
 		return err
@@ -23,15 +21,17 @@ func (c *Client) handleDataResponse(resp *message.DataResponse) error {
 		UIPrintln("DataRequest failed: ", resp.GetResultCode())
 		return errors.New(resp.GetResultCode())
 	}
-	UIPrintln("Initial Data retrieved successfully.")
-	if resp.DataType == "races" {
-		var races []RaceData
-		if err := json.Unmarshal(resp.Data, &races); err != nil {
-			UIPrintln("failed to unmarshal data: ", err)
-			return err
+	for i, dataType := range resp.DataType {
+		if dataType == "races" {
+			var races []RaceData
+			if err := json.Unmarshal(resp.Data[i], &races); err != nil {
+				UIPrintln("failed to unmarshal data: ", err)
+				return err
+			}
+			database.SetRaces(races)
 		}
-		database.SetRaces(races)
 	}
+	UIPrintln("Initial Data retrieved successfully.")
 	c.clientState.inputHandler = initialInputHandler
 	return nil
 }
