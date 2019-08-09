@@ -8,7 +8,14 @@ import (
 func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 	switch msg.Inner.(type) {
 	case *message.GameMessage_CreatePlayerResponse:
-		c.handleCreatePlayerResponse(msg.GetCreatePlayerResponse())
+		if err := c.handleCreatePlayerResponse(msg.GetCreatePlayerResponse()); err != nil {
+			log.Printf("Error handling create player response: %v", err)
+		}
+
+	case *message.GameMessage_DataResponse:
+		if err := c.handleDataResponse(msg.GetDataResponse()); err != nil {
+			log.Printf("Error handling data response: %v", err)
+		}
 
 	case *message.GameMessage_DeathNotification:
 		c.handleDeathNotification(msg.GetDeathNotification())

@@ -35,7 +35,7 @@ type ClientState struct {
 
 func NewClientState() *ClientState {
 	return &ClientState{
-		inputHandler: initialInputHandler,
+		inputHandler: voidInputHandler,
 	}
 }
 

@@ -53,6 +53,8 @@ func main() {
 	}
 	signal.Notify(client.quitSignal, os.Interrupt)
 
+	client.initialize()
+
 	clientui := NewClientUI(client)
 	// this runs ui event loop
 	clientui.initUi()

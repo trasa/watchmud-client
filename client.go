@@ -53,6 +53,17 @@ func NewClient(stream message.MudComm_SendReceiveClient) *Client {
 	return &c
 }
 
+func (c *Client) initialize() {
+	// send a request for data: races
+	if err := c.sendDataRequest(); err != nil {
+		log.Fatalf("Failed to send data request: %v", err)
+		return
+	}
+
+	// await response for data: races
+	// on success that handler sets clientState.inputHandler = initialInputHandler
+}
+
 func (c *Client) processInput(buf string) {
 	// based on the state of the app ...
 	tokens := message.Tokenize(buf)
