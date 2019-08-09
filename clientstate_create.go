@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -16,19 +17,15 @@ func createPlayerNameInputHandler(c *Client, tokens []string) {
 }
 
 func displayRaceChoices() {
-	UIPrintln("Select a Race:\n" +
-		"0 - Human\n" +
-		"1 - Dwarf\n" +
-		"2 - Elf\n" +
-		"3 - Halfling\n" +
-		"4 - Dragonborn\n" +
-		"5 - Half-Elf\n" +
-		"6 - Half-Orc\n" +
-		"7 - Gnome\n" +
-		"8 - Tiefling\n" +
-		"\n" +
-		"(or help for more information)\n" +
-		"ex. HELP DWARF")
+	var str strings.Builder
+	str.WriteString("Select a Race:\n")
+	for i := 0; i < len(database.Races); i++ {
+		str.WriteString(fmt.Sprintf("%d - %s\n", i, database.Races[int32(i)].RaceName))
+	}
+	str.WriteString("\n")
+	str.WriteString("(or help for more information)\n")
+	str.WriteString("ex. HELP DWARF")
+	UIPrint(str)
 }
 
 // select a race
@@ -38,7 +35,7 @@ func createPlayerRaceInputHandler(c *Client, tokens []string) {
 		displayRaceChoices()                            // same handler
 	} else {
 		choice, err := strconv.Atoi(tokens[0])
-		if err != nil || choice < 0 || choice > 8 {
+		if err != nil || choice < 0 || choice >= len(database.Races) {
 			UIPrintln("Please select a race from the list.")
 			displayRaceChoices()
 		} else {
