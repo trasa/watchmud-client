@@ -14,8 +14,9 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
-github.com/trasa/watchmud-message v0.0.13 h1:8ka2NgyXsmO1FFDZ9InLFNFG8ZMXydErKDBmQpEaY5s=
-github.com/trasa/watchmud-message v0.0.13/go.mod h1:x7rxg6Um7znCwoWp4dkl5tfomFNEUem0d4VXTe1H2ew=
+github.com/trasa/watchmud-message v0.0.15 h1:oN/2R7FJvVakKU5ahQu7ENtcTULBh6oPQDAzpY3yras=
+github.com/trasa/watchmud-message v0.0.15/go.mod h1:lU1OaLd7OMYtHHg4D2kjk6HpPzEJj2+BYP2r8fa8YUU=
+golang.org/x/net v0.0.0-20180710231904-039a4258aec0/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/net v0.0.0-20180731172858-49c15d80dfbc h1:fxZeP24od5lQwTpFLCU8QkWPRbntiOgNkcTByEnKbbo=
 golang.org/x/net v0.0.0-20180731172858-49c15d80dfbc/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/sync v0.0.0-20190423024810-112230192c58 h1:8gQV6CLnAEikrhgkHFbMAEhagSSnXWGV915qUMm9mrU=
@@ -24,7 +25,9 @@ golang.org/x/sys v0.0.0-20180727230415-bd9dbc187b6e h1:3dQ4fR8k5KugjVKO0oqSd1odx
 golang.org/x/sys v0.0.0-20180727230415-bd9dbc187b6e/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+google.golang.org/genproto v0.0.0-20180709204101-e92b11657268/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
 google.golang.org/genproto v0.0.0-20180731170733-daca94659cb5 h1:2PjFmwzH/sxgW9CRJDlEiwMHO8rOk1eMDzVL14HC1e4=
 google.golang.org/genproto v0.0.0-20180731170733-daca94659cb5/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
+google.golang.org/grpc v1.13.0/go.mod h1:yo6s7OP7yaDglbqo1J04qKzAhqBH6lvTonzMVmEdcZw=
 google.golang.org/grpc v1.14.0 h1:ArxJuB1NWfPY6r9Gp9gqwplT0Ge7nqv9msgu03lHLmo=
 google.golang.org/grpc v1.14.0/go.mod h1:yo6s7OP7yaDglbqo1J04qKzAhqBH6lvTonzMVmEdcZw=

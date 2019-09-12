@@ -98,6 +98,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 	case *message.GameMessage_TellAllNotification:
 		c.handleTellAllNotification(msg.GetTellAllNotification())
 
+	case *message.GameMessage_StatResponse:
+		c.handleStatResponse(msg.GetStatResponse())
+
 	case *message.GameMessage_ViolenceNotification:
 		c.handleViolenceNotification(msg.GetViolenceNotification())
 
