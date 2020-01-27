@@ -48,22 +48,15 @@ func createPlayerRaceInputHandler(c *Client, tokens []string) {
 }
 
 func displayClassChoices() {
-	UIPrintln("Select a class:\n" +
-		"0 - Fighter\n" +
-		"1 - Cleric\n" +
-		"2 - Rogue\n" +
-		"3 - Barbarian\n" +
-		"4 - Bard\n" +
-		"5 - Druid\n" +
-		"6 - Monk\n" +
-		"7 - Paladin\n" +
-		"8 - Ranger\n" +
-		"9 - Sorcerer\n" +
-		"10 - Warlock\n" +
-		"11 - Wizard\n" +
-		"\n" +
-		"(or help for more information)" +
-		"ex. HELP FIGHTER")
+	var str strings.Builder
+	str.WriteString("Select a class:\n")
+	for i := 0; i < len(database.Classes); i++ {
+		str.WriteString(fmt.Sprintf("%d - %s\n", i, database.Classes[int32(i)].ClassName))
+	}
+	str.WriteString("\n")
+	str.WriteString("(or help for more information)\n")
+	str.WriteString("ex. HELP FIGHTER")
+	UIPrint(str)
 }
 
 // select a class

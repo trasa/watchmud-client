@@ -22,13 +22,25 @@ func (c *Client) handleDataResponse(resp *message.DataResponse) error {
 		return errors.New(resp.GetResultCode())
 	}
 	for i, dataType := range resp.DataType {
-		if dataType == "races" {
+		switch dataType {
+		case "races":
 			var races []RaceData
 			if err := json.Unmarshal(resp.Data[i], &races); err != nil {
-				UIPrintln("failed to unmarshal data: ", err)
+				UIPrintln("failed to unmarshal race data: ", err)
 				return err
 			}
 			database.SetRaces(races)
+
+		case "classes":
+			var classes []ClassData
+			if err := json.Unmarshal(resp.Data[i], &classes); err != nil {
+				UIPrintln("failed to unmarshal class data: ", err)
+				return err
+			}
+			database.SetClasses(classes)
+
+		default:
+			UIPrintln("Unhandled Data Response Type: ", dataType)
 		}
 	}
 	UIPrintln("Initial Data retrieved successfully.")
