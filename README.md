@@ -30,7 +30,7 @@ like that is still very much TODO. :(
 
     get help for 'foo' *Note* Not Implemented yet...
 
-- `quit` or `/q`
+- `quit` or `/q` or `ctrl-c`
 
     exit the client
 

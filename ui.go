@@ -24,6 +24,7 @@ func NewClientUI(client *Client) *ClientUI {
 }
 
 func (c *ClientUI) initUi() {
+	log.Printf("Initializing UI")
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
 		panic(err)

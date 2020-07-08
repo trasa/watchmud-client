@@ -34,6 +34,7 @@ func Connect(serverAddress string, port int) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("Connected Successfully")
 	// this starts up the writePump and the readPump
 	return NewClient(stream), nil
 }
