@@ -64,18 +64,26 @@ func initialInputHandler(c *Client, tokens []string) {
 	case "help":
 		// TODO context sensitive help
 		printHelp(tokens)
-		// keep same handler
+		// keep same input handler
 
 	default:
 		UIPrintln("Unknown command, try 'login' or 'create' or 'help'")
-		// keep same handler
+		// keep same input handler
 	}
 }
 
 // Default game handler, do the normal stuff with the
 // input as if you were in the game.
 func gameInputHandler(c *Client, tokens []string) {
-	c.sendTokens(tokens)
+	switch tokens[0] {
+	case "help":
+		// TODO context sensitive help
+		// don't send to server, handle locally, don't change input handler
+		printHelp(tokens)
+		break
+	default:
+		c.sendTokens(tokens)
+	}
 }
 
 // Game handler when we're not allowing input from the user
