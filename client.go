@@ -93,6 +93,7 @@ func (c *Client) sendTokens(tokens []string) {
 }
 
 func (c *Client) SendMessage(msg *message.GameMessage) {
+	log.Printf("Send: %T - %v", msg.Inner, msg.Inner)
 	c.source <- msg
 }
 

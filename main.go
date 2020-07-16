@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"os/signal"
@@ -37,8 +36,8 @@ func main() {
 		log.Fatalf("error opening log file: %v", err)
 	}
 	defer f.Close()
-	wrt := io.MultiWriter(os.Stdout, f)
-	log.SetOutput(wrt)
+	//wrt := io.MultiWriter(os.Stdout, f)
+	log.SetOutput(f)
 	log.Println("Logging initialized.")
 
 	ActiveConfig = &Config{
