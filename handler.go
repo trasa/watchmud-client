@@ -1,12 +1,12 @@
 package main
 
 import (
+	"github.com/rs/zerolog/log"
 	"github.com/trasa/watchmud-message"
-	"log"
 )
 
 func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
-	log.Printf("Receive: %T - %v", msg.Inner, msg.Inner)
+	log.Debug().Msgf("Receive: %T - %v", msg.Inner, msg.Inner)
 	switch msg.Inner.(type) {
 	case *message.GameMessage_CreatePlayerResponse:
 		if err := c.handleCreatePlayerResponse(msg.GetCreatePlayerResponse()); err != nil {

@@ -3,7 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"os"
 	"os/signal"
 )
@@ -23,6 +24,7 @@ func main() {
 	doHelp := flag.Bool("help", false, "Show Help")
 	doHelpAlias := flag.Bool("h", false, "Show Help")
 	logFile := flag.String("logFile", "./watchmud-client.log", "File to write client logs to")
+	debug := flag.Bool("debug", false, "Set log level to debug")
 	flag.Parse()
 	if *doHelp || *doHelpAlias {
 		usage()
@@ -33,12 +35,15 @@ func main() {
 	// init logging
 	f, err := os.OpenFile(*logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		log.Fatalf("error opening log file: %v", err)
+		log.Panic().Msgf("error opening log file: %v", err)
 	}
 	defer f.Close()
-	//wrt := io.MultiWriter(os.Stdout, f)
-	log.SetOutput(f)
-	log.Println("Logging initialized.")
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	if *debug {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: f})
+	log.Info().Msg("Logging initialized.")
 
 	ActiveConfig = &Config{
 		serverHost: *host,
@@ -48,7 +53,7 @@ func main() {
 	// connect client
 	client, err := Connect(ActiveConfig.serverHost, ActiveConfig.serverPort)
 	if err != nil {
-		log.Fatal("Failed to connect", err)
+		log.Fatal().Err(err).Msg("Failed to connect")
 	}
 	signal.Notify(client.quitSignal, os.Interrupt)
 

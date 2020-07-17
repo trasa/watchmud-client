@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/jroimartin/gocui"
+	"github.com/rs/zerolog/log"
 	"io"
-	"log"
 	"os"
 )
 
@@ -41,7 +41,7 @@ func (c *ClientUI) initUi() {
 
 	// the main loop runs here:
 	if err := g.MainLoop(); err != nil && err != gocui.ErrQuit {
-		log.Panicln(err)
+		log.Panic().Err(err).Msg("Main UI Loop terminated unexpectedly")
 	}
 }
 

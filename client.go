@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/rs/zerolog/log"
 	"github.com/trasa/watchmud-message"
 	"google.golang.org/grpc"
-	"log"
 	"os"
 )
 
@@ -20,7 +20,7 @@ type Client struct {
 
 func Connect(serverAddress string, port int) (*Client, error) {
 	addr := fmt.Sprintf("%s:%d", serverAddress, port)
-	log.Printf("Connecting to %s", addr)
+	log.Info().Msgf("Connecting to %s", addr)
 
 	opts := []grpc.DialOption{
 		grpc.WithInsecure(),
@@ -34,7 +34,7 @@ func Connect(serverAddress string, port int) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Printf("Connected Successfully")
+	log.Info().Msg("Connected Successfully")
 	// this starts up the writePump and the readPump
 	return NewClient(stream), nil
 }
@@ -57,7 +57,7 @@ func NewClient(stream message.MudComm_SendReceiveClient) *Client {
 func (c *Client) initialize() {
 	// send a request for data: races
 	if err := c.sendDataRequest(); err != nil {
-		log.Fatalf("Failed to send data request: %v", err)
+		log.Fatal().Err(err).Msg("Failed to send data request")
 		return
 	}
 
@@ -79,7 +79,7 @@ func (c *Client) processInput(buf string) {
 
 func (c *Client) sendTokens(tokens []string) {
 	if c.isClosed {
-		log.Println("not sending, c.isClosed")
+		log.Warn().Msg("not sending, c.isClosed")
 		return
 	}
 	// translate line into message
@@ -107,11 +107,11 @@ func (c *Client) writePump() {
 			}
 
 		case quitmessage := <-c.quit:
-			log.Println("writePump: QUIT channel message received:", quitmessage)
+			log.Info().Msgf("writePump: QUIT channel message received: %v", quitmessage)
 			c.isClosed = true
 			return
 		case quitsig := <-c.quitSignal:
-			log.Println("writePump: QuitSignal received:", quitsig.String())
+			log.Info().Msgf("writePump: QuitSignal received: %s", quitsig.String())
 			c.isClosed = true
 			return
 		}
@@ -124,11 +124,11 @@ func (c *Client) readPump() {
 		if err != nil {
 			c.quit <- fmt.Sprint("read error ", err)
 			c.isClosed = true
-			log.Fatalf("failed to receive: %v", err)
+			log.Fatal().Err(err).Msg("failed to receive")
 			return
 		}
 		if err := c.handleIncomingMessage(in); err != nil {
-			log.Fatalf("Error handling incoming message: %v", err)
+			log.Fatal().Err(err).Msg("Error handling incoming message")
 			return
 		}
 	}
