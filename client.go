@@ -85,15 +85,15 @@ func (c *Client) sendTokens(tokens []string) {
 	// translate line into message
 	msg, err := message.TranslateLineToMessage(tokens)
 	if err != nil {
-		// TODO better error message
-		log.Printf("Error creating New Game Message for payload: %v", err)
+		log.Error().Msgf("Error creating New Game Message for payload: %v", err)
+		UIPrintError(err)
 	} else {
 		c.source <- msg
 	}
 }
 
 func (c *Client) SendMessage(msg *message.GameMessage) {
-	log.Printf("Send: %T - %v", msg.Inner, msg.Inner)
+	log.Debug().Msgf("Send: %T - %v", msg.Inner, msg.Inner)
 	c.source <- msg
 }
 
@@ -102,7 +102,7 @@ func (c *Client) writePump() {
 		select {
 		case msg := <-c.source:
 			if err := c.stream.Send(msg); err != nil {
-				log.Printf("RPC Write Error: %v", err)
+				log.Error().Msgf("RPC Write Error: %v", err)
 				return
 			}
 

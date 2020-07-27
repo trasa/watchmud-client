@@ -54,6 +54,9 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 	case *message.GameMessage_LeaveRoomNotification:
 		c.handleLeaveRoomNotification(msg.GetLeaveRoomNotification())
 
+	case *message.GameMessage_LoadResponse:
+		c.handleLoadResponse(msg.GetLoadResponse())
+
 	case *message.GameMessage_LoginResponse:
 		return c.handleLoginResponse(msg.GetLoginResponse())
 
@@ -112,7 +115,8 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 		c.handleWhoResponse(msg.GetWhoResponse())
 
 	default:
-		log.Printf("client.handleIncomingResponse: unknown response type: %s", msg.Inner)
+		log.Error().Msgf("client.handleIncomingResponse: unknown response type: %s", msg.Inner)
+		UIPrintf("Error: client.handleIncomingRequest: unknown response type: %s", msg.Inner)
 	}
 	return nil
 }
