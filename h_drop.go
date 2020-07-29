@@ -17,6 +17,9 @@ func (c *Client) handleDropResponse(r *message.DropResponse) {
 	case "TARGET_NOT_FOUND":
 		UIPrintln("You don't have one of those.")
 
+	case "TARGET_IN_USE":
+		UIPrintln("You're still using that!")
+
 	default:
 		UIPrintResponseError(r, r.GetResultCode())
 	}
