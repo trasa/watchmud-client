@@ -78,6 +78,12 @@ func (c *Client) handleIncomingMessage(msg *message.GameMessage) error {
 	case *message.GameMessage_RecallResponse:
 		c.handleRecallResponse(msg.GetRecallResponse())
 
+	case *message.GameMessage_RestoreResponse:
+		c.handleRestoreResponse(msg.GetRestoreResponse())
+
+	case *message.GameMessage_RestoreNotification:
+		c.handleRestoreNotification(msg.GetRestoreNotification())
+
 	case *message.GameMessage_RoomStatusResponse:
 		c.handleRoomStatusResponse(msg.GetRoomStatusResponse())
 
